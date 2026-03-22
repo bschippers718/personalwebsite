@@ -1,0 +1,379 @@
+@import "tailwindcss";
+
+:root {
+  --void: #07070a;
+  --base: #0f0f14;
+  --raised: #16161f;
+  --hover: #1c1c28;
+  --bright: #e8e8f0;
+  --dim: #7a7a96;
+  --ghost: #4a4a64;
+  --neon: #00ffb2;
+  --ember: #ffb547;
+  --blaze: #f46;
+  --gold: gold;
+  --frost: #48f;
+  --line: #1e1e32;
+  --edge: #2e2e4a;
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-mono);
+  background: var(--void);
+  color: var(--bright);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+::selection {
+  color: var(--neon);
+  background: #00ffb233;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== Page wrapper — clips any stray overflow at the viewport edge ===== */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ===== Content container — centers content with a max-width ===== */
+.content-container {
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .content-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* ===== Grid background ===== */
+.grid-bg {
+  position: relative;
+}
+
+.grid-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(#00ffb206 1px, transparent 1px),
+    linear-gradient(90deg, #00ffb206 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(80% 70% at 50% 30%, #000 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(80% 70% at 50% 30%, #000 0%, transparent 100%);
+}
+
+/* ===== Scanlines overlay ===== */
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.012) 2px 4px
+  );
+}
+
+/* ===== Hero title ===== */
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.5rem, 6vw, 5rem);
+  text-align: center;
+}
+
+/* ===== Hero section ===== */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 6rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    min-height: 60vh;
+    padding: 4rem 0 3rem;
+  }
+}
+
+/* ===== Section containers — centered with max-width ===== */
+.section-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4rem 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .section-container {
+    padding: 2.5rem 1rem;
+  }
+}
+
+/* ===== Hero buttons ===== */
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ===== Stats bar ===== */
+.stats-bar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .stats-bar-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-bar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-bar-grid > div {
+    padding: 1rem !important;
+  }
+}
+
+/* ===== Career rows ===== */
+.career-row-grid {
+  display: grid;
+  grid-template-columns: 10rem 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.25rem 1.5rem;
+  transition: background 0.2s;
+}
+
+.career-row-grid:hover {
+  background: var(--hover);
+}
+
+@media (max-width: 768px) {
+  .career-row-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+/* ===== Writing rows ===== */
+.writing-row-grid {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+
+.writing-row-grid:hover {
+  background: var(--hover);
+}
+
+@media (max-width: 640px) {
+  .writing-row-grid {
+    grid-template-columns: 2rem 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .writing-pub-mobile {
+    display: block;
+    margin-top: 0.25rem;
+  }
+
+  .writing-pub-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .writing-pub-mobile {
+    display: none;
+  }
+
+  .writing-pub-desktop {
+    display: block;
+  }
+}
+
+/* ===== PR grid ===== */
+.pr-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+@media (max-width: 640px) {
+  .pr-grid-responsive {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Race cards ===== */
+.race-card-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: var(--base);
+  border: 1px solid var(--line);
+  transition: background 0.2s;
+}
+
+.race-card-flex:hover {
+  background: var(--hover);
+}
+
+@media (max-width: 640px) {
+  .race-card-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+}
+
+/* ===== Projects grid ===== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Tags ===== */
+.tag-current {
+  color: var(--neon) !important;
+  background: #00ffb20f !important;
+  border-color: #00ffb24d !important;
+}
+
+.tag-acquired {
+  color: var(--ember) !important;
+  background: #ffb5470f !important;
+  border-color: #ffb5474d !important;
+}
+
+.tag-education {
+  color: var(--frost) !important;
+  background: #4488ff0f !important;
+  border-color: #4488ff4d !important;
+}
+
+.tag-award {
+  color: var(--gold) !important;
+  background: #ffd7000f !important;
+  border-color: #ffd7004d !important;
+}
+
+/* ===== Badges ===== */
+.badge-neon {
+  color: var(--neon) !important;
+  background: #00ffb20f !important;
+  border-color: #00ffb24d !important;
+}
+
+.badge-gold {
+  color: var(--gold) !important;
+  background: #ffd7000f !important;
+  border-color: #ffd7004d !important;
+}
+
+/* ===== Contact row mobile ===== */
+@media (max-width: 480px) {
+  .contact-row > div:last-child {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .contact-row a {
+    font-size: 0.75rem !important;
+    word-break: break-all;
+  }
+}
+
+/* ===== Hover for base-bg rows ===== */
+.contact-link:hover {
+  color: var(--ember) !important;
+}
+
+/* ===== Pulse rings animation ===== */
+@keyframes pulse-ring {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.015); }
+}
