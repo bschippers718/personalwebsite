@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useTezLab } from "@/lib/use-tezlab";
 import "./animations.css";
 
-// ─── Mock Data (swap with TezLab MCP calls) ─────────────────────────────────
+// ─── Mock Data (used as fallback when MCP not connected) ─────────────────────
 
 const VEHICLE = {
   name: "Model Y Long Range",
@@ -570,6 +571,10 @@ function HudPortal({ children }: { children: React.ReactNode }) {
 
 export default function BatteryTamagotchiPage() {
   const [hudMode, setHudMode] = useState(false);
+  const { status, loading: mcpLoading, data: liveData } = useTezLab();
+
+  const isConnected = status?.connected ?? false;
+  const isLive = isConnected && !mcpLoading && Object.keys(liveData).length > 0;
 
   const core = BATTERY.healthPct;
   const pulse = EFFICIENCY.averagePct;
@@ -630,34 +635,107 @@ export default function BatteryTamagotchiPage() {
             </span>
           </div>
 
-          <button
-            onClick={() => setHudMode(true)}
-            style={{
-              background: "none",
-              border: `1px solid ${T.cardBorder}`,
-              color: T.textDim,
-              fontSize: "10px",
-              letterSpacing: "0.15em",
-              padding: "0.4rem 0.85rem",
-              cursor: "pointer",
-              fontFamily: "var(--font-mono)",
-              transition: "border-color 0.2s, color 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = T.green;
-              e.currentTarget.style.color = T.green;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = T.cardBorder;
-              e.currentTarget.style.color = T.textDim;
-            }}
-          >
-            LAUNCH HUD
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            {isLive && (
+              <span style={{ fontSize: "9px", color: T.green, letterSpacing: "0.12em", fontWeight: 600 }}>
+                ● LIVE
+              </span>
+            )}
+            {!isConnected ? (
+              <a
+                href="/api/tezlab/login"
+                style={{
+                  background: "none",
+                  border: `1px solid ${T.green}50`,
+                  color: T.green,
+                  fontSize: "10px",
+                  letterSpacing: "0.15em",
+                  padding: "0.4rem 0.85rem",
+                  cursor: "pointer",
+                  fontFamily: "var(--font-mono)",
+                  textDecoration: "none",
+                  transition: "border-color 0.2s, background 0.2s",
+                }}
+              >
+                CONNECT TEZLAB
+              </a>
+            ) : (
+              <a
+                href="/api/tezlab/logout"
+                style={{
+                  background: "none",
+                  border: `1px solid ${T.cardBorder}`,
+                  color: T.textGhost,
+                  fontSize: "10px",
+                  letterSpacing: "0.15em",
+                  padding: "0.4rem 0.85rem",
+                  cursor: "pointer",
+                  fontFamily: "var(--font-mono)",
+                  textDecoration: "none",
+                }}
+              >
+                DISCONNECT
+              </a>
+            )}
+            <button
+              onClick={() => setHudMode(true)}
+              style={{
+                background: "none",
+                border: `1px solid ${T.cardBorder}`,
+                color: T.textDim,
+                fontSize: "10px",
+                letterSpacing: "0.15em",
+                padding: "0.4rem 0.85rem",
+                cursor: "pointer",
+                fontFamily: "var(--font-mono)",
+                transition: "border-color 0.2s, color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = T.green;
+                e.currentTarget.style.color = T.green;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = T.cardBorder;
+                e.currentTarget.style.color = T.textDim;
+              }}
+            >
+              LAUNCH HUD
+            </button>
+          </div>
         </div>
       </div>
 
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.5rem" }}>
+
+        {/* ── Data Source Banner ── */}
+        {!isConnected && (
+          <div style={{
+            padding: "0.75rem 1rem",
+            background: `${T.orange}10`,
+            borderBottom: `1px solid ${T.orange}25`,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "0.75rem",
+            flexWrap: "wrap",
+          }}>
+            <span style={{ fontSize: "11px", color: T.orange, letterSpacing: "0.05em" }}>
+              Showing demo data
+            </span>
+            <a
+              href="/api/tezlab/login"
+              style={{
+                fontSize: "10px",
+                color: T.green,
+                letterSpacing: "0.1em",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              Connect TezLab for live data →
+            </a>
+          </div>
+        )}
 
         {/* ── Creature + Evolution ── */}
         <div style={{
