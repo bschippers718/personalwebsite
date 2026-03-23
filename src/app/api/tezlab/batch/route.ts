@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { callTool, refreshAccessToken } from "@/lib/tezlab-mcp";
+import { callToolsBatch, refreshAccessToken } from "@/lib/tezlab-mcp";
 import { cookies } from "next/headers";
 
 interface RefreshedTokens {
@@ -31,14 +31,14 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { tool, args } = body as { tool: string; args?: Record<string, unknown> };
+    const { calls } = body as { calls: Array<{ tool: string; args?: Record<string, unknown> }> };
 
-    if (!tool) {
-      return NextResponse.json({ error: "Missing 'tool' in request body" }, { status: 400 });
+    if (!calls || !Array.isArray(calls)) {
+      return NextResponse.json({ error: "Missing 'calls' array" }, { status: 400 });
     }
 
-    const result = await callTool(accessToken, tool, args || {});
-    const response = NextResponse.json({ result });
+    const results = await callToolsBatch(accessToken, calls);
+    const response = NextResponse.json({ results });
 
     if (refreshedTokens) {
       const cookieOptions = {
@@ -62,12 +62,7 @@ export async function POST(request: NextRequest) {
     return response;
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
-
-    if (message.includes("401") || message.includes("unauthorized")) {
-      return NextResponse.json({ error: "auth_expired" }, { status: 401 });
-    }
-
-    console.error("MCP call error:", err);
+    console.error("MCP batch error:", err);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

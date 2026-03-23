@@ -348,8 +348,27 @@ function GhostRace({ data, compact = false }: { data: typeof GHOST_RACE; compact
 
 // ─── HUD Mode (Tesla In-Car View) ───────────────────────────────────────────
 
-function HudView({ evolution, onExit }: { evolution: Evolution; onExit: () => void }) {
-  const drive = LIVE_DRIVE;
+interface LiveDriveData {
+  active: boolean;
+  elapsed: string;
+  route: string;
+  distanceMi: number;
+  efficiency: number;
+  avgSpeedMph: number;
+  energyKwh: number;
+  rangeRemainingMi: number;
+  batteryPct: number;
+}
+
+function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive }: {
+  evolution: Evolution;
+  onExit: () => void;
+  battery: typeof BATTERY;
+  efficiency: typeof EFFICIENCY;
+  ghostRace: typeof GHOST_RACE;
+  liveDrive: LiveDriveData;
+}) {
+  const drive = liveDrive;
 
   const hudStats = [
     { label: "DISTANCE", value: `${drive.distanceMi}`, unit: "mi" },
@@ -400,7 +419,7 @@ function HudView({ evolution, onExit }: { evolution: Evolution; onExit: () => vo
                 animation: "core-pulse 1.5s ease-in-out infinite",
               }} />
               <span style={{ fontSize: "10px", color: T.green, letterSpacing: "0.15em", fontWeight: 600 }}>
-                LIVE · {drive.elapsed}
+                LIVE · {drive.elapsed} · {drive.route}
               </span>
             </div>
           )}
@@ -455,9 +474,9 @@ function HudView({ evolution, onExit }: { evolution: Evolution; onExit: () => vo
 
           <div style={{ display: "flex", gap: "1.5rem" }}>
             {[
-              { label: "CORE", value: `${BATTERY.healthPct}%` },
-              { label: "PULSE", value: `${EFFICIENCY.averagePct}%` },
-              { label: "STREAK", value: `${EFFICIENCY.streakWins}W` },
+              { label: "CORE", value: `${battery.healthPct}%` },
+              { label: "PULSE", value: `${efficiency.averagePct}%` },
+              { label: "STREAK", value: `${efficiency.streakWins}W` },
             ].map((s) => (
               <div key={s.label} style={{ textAlign: "center" }}>
                 <div style={{ fontSize: "9px", letterSpacing: "0.18em", color: T.textDim, marginBottom: "0.25rem" }}>
@@ -543,14 +562,14 @@ function HudView({ evolution, onExit }: { evolution: Evolution; onExit: () => vo
               alignItems: "center",
             }}>
               <span style={{ fontSize: "10px", color: T.textDim, letterSpacing: "0.1em" }}>
-                LAST GHOST · {GHOST_RACE.routeName}
+                LAST GHOST · {ghostRace.routeName}
               </span>
               <span style={{
                 fontSize: "10px",
                 fontWeight: 600,
-                color: GHOST_RACE.result === "won" ? T.green : T.red,
+                color: ghostRace.result === "won" ? T.green : T.red,
               }}>
-                {GHOST_RACE.result === "won" ? "WON" : "LOST"} {GHOST_RACE.delta}
+                {ghostRace.result === "won" ? "WON" : "LOST"} {ghostRace.delta}
               </span>
             </div>
           </div>
@@ -558,6 +577,159 @@ function HudView({ evolution, onExit }: { evolution: Evolution; onExit: () => vo
       </div>
     </div>
   );
+}
+
+// ─── Data Mappers (MCP response → UI types) ─────────────────────────────────
+
+function mapVehicle(raw: unknown): typeof VEHICLE {
+  if (!raw || typeof raw !== "object") return VEHICLE;
+  const v = raw as Record<string, unknown>;
+  const arr = Array.isArray(v) ? v[0] : v.vehicles ? (v.vehicles as unknown[])[0] : v;
+  if (!arr || typeof arr !== "object") return VEHICLE;
+  const d = arr as Record<string, unknown>;
+  return {
+    name: (d.display_name || d.name || d.model || `${d.year || ""} ${d.model_name || ""}`.trim() || VEHICLE.name) as string,
+    year: (d.year ?? d.model_year ?? VEHICLE.year) as number,
+    miles: Math.round((d.odometer ?? d.miles ?? d.mileage ?? VEHICLE.miles) as number),
+    vin: (d.vin ? `${String(d.vin).slice(0, 5)}...${String(d.vin).slice(-3)}` : VEHICLE.vin) as string,
+  };
+}
+
+function mapBattery(raw: unknown): typeof BATTERY {
+  if (!raw || typeof raw !== "object") return BATTERY;
+  const b = raw as Record<string, unknown>;
+  const degradation = (b.degradation_pct ?? b.degradation) as number | undefined;
+  const healthPct = degradation != null
+    ? Number((100 - degradation).toFixed(1))
+    : (b.health_pct ?? b.soh ?? b.battery_health ?? b.health_percent ?? b.healthPct) as number | undefined;
+  const hp = healthPct ?? BATTERY.healthPct;
+  const oemCap = (b.oem_capacity_kwh ?? b.original_capacity) as number | undefined;
+  const curCap = (b.current_capacity_kwh ?? b.current_capacity) as number | undefined;
+  const maxRange = (b.max_range ?? b.max_range_miles ?? b.current_range ?? b.maxRangeMiles) as number | undefined;
+  const origRange = (b.original_range ?? b.original_range_miles ?? b.originalRangeMiles) as number | undefined;
+  return {
+    healthPct: hp,
+    degradationPct: degradation ?? Number((100 - hp).toFixed(1)),
+    maxRangeMiles: maxRange ? Math.round(maxRange) : (curCap && oemCap ? Math.round((curCap / oemCap) * BATTERY.originalRangeMiles) : BATTERY.maxRangeMiles),
+    originalRangeMiles: origRange ? Math.round(origRange) : BATTERY.originalRangeMiles,
+    trend: (b.trend ?? b.trend_text ?? b.health_score ?? BATTERY.trend) as string,
+    trendDirection: ((b.trend_direction ?? b.trendDirection ?? BATTERY.trendDirection) as "up" | "down"),
+  };
+}
+
+function mapEfficiency(raw: unknown): typeof EFFICIENCY {
+  if (!raw || typeof raw !== "object") return EFFICIENCY;
+  const e = raw as Record<string, unknown>;
+  return {
+    averagePct: Math.round((e.average ?? e.avg ?? e.average_pct ?? e.averagePct ?? EFFICIENCY.averagePct) as number),
+    last30Days: Math.round((e.last_30_days ?? e.last30Days ?? e.thirty_day ?? EFFICIENCY.last30Days) as number),
+    bestWeek: Math.round((e.best_week ?? e.bestWeek ?? e.peak ?? EFFICIENCY.bestWeek) as number),
+    streakWins: Math.round((e.streak ?? e.streak_wins ?? e.streakWins ?? EFFICIENCY.streakWins) as number),
+  };
+}
+
+function mapDrives(raw: unknown): typeof RECENT_DRIVES {
+  if (!raw) return RECENT_DRIVES;
+  const arr = Array.isArray(raw) ? raw : (raw as Record<string, unknown>).drives as unknown[] ?? [];
+  if (!arr.length) return RECENT_DRIVES;
+  return arr.slice(0, 5).map((d: unknown) => {
+    const dr = d as Record<string, unknown>;
+    const eff = Math.round((dr.efficiency ?? dr.efficiency_pct ?? 80) as number);
+    const dist = (dr.distance ?? dr.distance_miles ?? dr.miles ?? 0) as number;
+    return {
+      date: formatDate(dr.date ?? dr.started_at ?? dr.start_time),
+      distance: `${dist.toFixed(1)} mi`,
+      efficiency: eff,
+      result: eff >= 82 ? "won" as const : "lost" as const,
+      route: buildRoute(dr),
+    };
+  });
+}
+
+function mapCharges(raw: unknown): typeof RECENT_CHARGES {
+  if (!raw) return RECENT_CHARGES;
+  const arr = Array.isArray(raw) ? raw : (raw as Record<string, unknown>).charges as unknown[] ?? [];
+  if (!arr.length) return RECENT_CHARGES;
+  return arr.slice(0, 5).map((c: unknown) => {
+    const ch = c as Record<string, unknown>;
+    const from = Math.round((ch.start_soc ?? ch.start_pct ?? ch.from ?? 50) as number);
+    const to = Math.round((ch.end_soc ?? ch.end_pct ?? ch.to ?? 80) as number);
+    const isSupercharger = String(ch.charge_type ?? ch.type ?? "").toLowerCase().includes("super") ||
+      String(ch.charge_type ?? ch.type ?? "").toLowerCase().includes("dc");
+    const good = !isSupercharger && to <= 90;
+    return {
+      date: formatDate(ch.date ?? ch.started_at ?? ch.start_time),
+      type: (ch.charge_type ?? ch.type ?? ch.location ?? "L2") as string,
+      from,
+      to,
+      coreImpact: good ? +3 : -2,
+      good,
+    };
+  });
+}
+
+function buildRoute(dr: Record<string, unknown>): string {
+  if (dr.from && dr.to) {
+    const f = (dr.from as Record<string, unknown>).name as string | undefined;
+    const t = (dr.to as Record<string, unknown>).name as string | undefined;
+    if (f && t) return `${f} → ${t}`;
+  }
+  return (dr.route ?? dr.route_name ?? dr.destination ?? "Drive") as string;
+}
+
+function mapLiveDrive(drivesRaw: unknown, statusRaw: unknown): LiveDriveData {
+  const fallback: LiveDriveData = {
+    ...LIVE_DRIVE,
+    route: "—",
+  };
+
+  const drives = Array.isArray(drivesRaw) ? drivesRaw : (drivesRaw as Record<string, unknown>)?.drives as unknown[] ?? [];
+  const latestDrive = drives[0] as Record<string, unknown> | undefined;
+  if (!latestDrive) return fallback;
+
+  const dist = (latestDrive.distance ?? 0) as number;
+  const eff = (latestDrive.efficiency_pct ?? latestDrive.efficiency ?? 0) as number;
+  const energy = (latestDrive.energy_used_kwh ?? latestDrive.energy ?? 0) as number;
+  const durationSec = (latestDrive.duration_sec ?? 0) as number;
+  const avgSpeed = durationSec > 0 ? Math.round((dist / (durationSec / 3600))) : 0;
+
+  const from = latestDrive.from as Record<string, unknown> | undefined;
+  const to = latestDrive.to as Record<string, unknown> | undefined;
+  const fromName = (from?.name ?? "?") as string;
+  const toName = (to?.name ?? "?") as string;
+
+  const startBat = (latestDrive.start_battery_pct ?? 100) as number;
+  const endBat = (latestDrive.end_battery_pct ?? startBat) as number;
+
+  const mins = Math.floor(durationSec / 60);
+  const hrs = Math.floor(mins / 60);
+  const elapsed = hrs > 0 ? `${hrs}h ${mins % 60}m` : `${mins}m`;
+
+  const status = statusRaw as Record<string, unknown> | undefined;
+  const bat = status?.battery as Record<string, unknown> | undefined;
+  const range = bat?.real_world_range ?? bat?.range ?? 0;
+
+  return {
+    active: true,
+    elapsed,
+    route: `${fromName} → ${toName}`,
+    distanceMi: Math.round(dist * 10) / 10,
+    efficiency: Math.round(eff),
+    avgSpeedMph: avgSpeed,
+    energyKwh: Math.round(energy * 10) / 10,
+    rangeRemainingMi: Math.round(range as number),
+    batteryPct: endBat,
+  };
+}
+
+function formatDate(val: unknown): string {
+  if (!val) return "—";
+  try {
+    const d = new Date(String(val));
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  } catch {
+    return String(val).slice(0, 6);
+  }
 }
 
 // ─── Main Page ───────────────────────────────────────────────────────────────
@@ -571,13 +743,32 @@ function HudPortal({ children }: { children: React.ReactNode }) {
 
 export default function BatteryTamagotchiPage() {
   const [hudMode, setHudMode] = useState(false);
-  const { status, loading: mcpLoading, data: liveData } = useTezLab();
+  const {
+    status,
+    loading: mcpLoading,
+    vehicles: mcpVehicles,
+    selectedVin,
+    selectVehicle,
+    data: liveData,
+    error: mcpError,
+  } = useTezLab();
 
   const isConnected = status?.connected ?? false;
-  const isLive = isConnected && !mcpLoading && Object.keys(liveData).length > 0;
+  const hasData = Object.values(liveData).some((v) => v != null);
+  const isLive = isConnected && !mcpLoading && hasData;
 
-  const core = BATTERY.healthPct;
-  const pulse = EFFICIENCY.averagePct;
+  const activeVehicle = mcpVehicles.find((v) => v.vin === selectedVin);
+  const vehicle = activeVehicle
+    ? { name: `${activeVehicle.model}`, year: activeVehicle.modelYear, miles: activeVehicle.odometer, vin: `${activeVehicle.vin.slice(0, 5)}...${activeVehicle.vin.slice(-3)}` }
+    : VEHICLE;
+  const battery = isLive ? mapBattery(liveData.batteryHealth) : BATTERY;
+  const efficiency = isLive ? mapEfficiency(liveData.efficiency) : EFFICIENCY;
+  const drives = isLive ? mapDrives(liveData.drives) : RECENT_DRIVES;
+  const charges = isLive ? mapCharges(liveData.charges) : RECENT_CHARGES;
+  const liveDrive = isLive ? mapLiveDrive(liveData.drives, liveData.vehicleStatus) : { ...LIVE_DRIVE, route: GHOST_RACE.routeName };
+
+  const core = battery.healthPct;
+  const pulse = efficiency.averagePct;
   const evolution = getEvolution(core, pulse);
 
   return (
@@ -590,7 +781,7 @@ export default function BatteryTamagotchiPage() {
     }}>
       {hudMode && (
         <HudPortal>
-          <HudView evolution={evolution} onExit={() => setHudMode(false)} />
+          <HudView evolution={evolution} onExit={() => setHudMode(false)} battery={battery} efficiency={efficiency} ghostRace={GHOST_RACE} liveDrive={liveDrive} />
         </HudPortal>
       )}
 
@@ -640,6 +831,37 @@ export default function BatteryTamagotchiPage() {
               <span style={{ fontSize: "9px", color: T.green, letterSpacing: "0.12em", fontWeight: 600 }}>
                 ● LIVE
               </span>
+            )}
+            {mcpVehicles.length > 1 && (
+              <select
+                value={selectedVin ?? ""}
+                onChange={(e) => selectVehicle(e.target.value)}
+                style={{
+                  background: T.card,
+                  border: `1px solid ${T.cardBorder}`,
+                  color: T.text,
+                  fontSize: "10px",
+                  letterSpacing: "0.08em",
+                  padding: "0.35rem 0.6rem",
+                  fontFamily: "var(--font-mono)",
+                  cursor: "pointer",
+                  outline: "none",
+                  borderRadius: 0,
+                  WebkitAppearance: "none",
+                  MozAppearance: "none",
+                  appearance: "none",
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%236b6b8a'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "right 0.5rem center",
+                  paddingRight: "1.5rem",
+                }}
+              >
+                {mcpVehicles.map((v) => (
+                  <option key={v.vin} value={v.vin}>
+                    {v.displayName}
+                  </option>
+                ))}
+              </select>
             )}
             {!isConnected ? (
               <a
@@ -708,6 +930,46 @@ export default function BatteryTamagotchiPage() {
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.5rem" }}>
 
         {/* ── Data Source Banner ── */}
+        {isConnected && mcpLoading && (
+          <div style={{
+            padding: "0.75rem 1rem",
+            background: `${T.green}08`,
+            borderBottom: `1px solid ${T.green}15`,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}>
+            <div style={{
+              width: 6, height: 6, borderRadius: "50%",
+              background: T.green,
+              animation: "core-pulse 1s ease-in-out infinite",
+            }} />
+            <span style={{ fontSize: "11px", color: T.green, letterSpacing: "0.05em" }}>
+              Loading live data from TezLab…
+            </span>
+          </div>
+        )}
+        {isConnected && mcpError && !hasData && (
+          <div style={{
+            padding: "0.75rem 1rem",
+            background: `${T.red}10`,
+            borderBottom: `1px solid ${T.red}25`,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}>
+            <div style={{
+              width: 6, height: 6, borderRadius: "50%",
+              background: T.red,
+              animation: "core-pulse 2s ease-in-out infinite",
+            }} />
+            <span style={{ fontSize: "11px", color: T.red, letterSpacing: "0.05em" }}>
+              {mcpError}
+            </span>
+          </div>
+        )}
         {!isConnected && (
           <div style={{
             padding: "0.75rem 1rem",
@@ -798,9 +1060,9 @@ export default function BatteryTamagotchiPage() {
           flexWrap: "wrap",
         }}>
           {[
-            `${VEHICLE.year} ${VEHICLE.name}`,
-            `${VEHICLE.miles.toLocaleString()} mi`,
-            VEHICLE.vin,
+            activeVehicle ? `${activeVehicle.modelYear} ${activeVehicle.displayName}` : `${vehicle.year} ${vehicle.name}`,
+            `${vehicle.miles.toLocaleString()} mi`,
+            vehicle.vin,
           ].map((item, i) => (
             <span key={i} style={{
               fontSize: "11px",
@@ -822,7 +1084,7 @@ export default function BatteryTamagotchiPage() {
             <RingGauge
               value={core}
               label="Core"
-              sublabel={`Battery Health · ${BATTERY.trend}`}
+              sublabel={`Battery Health · ${battery.trend}`}
               color={T.green}
               size={170}
             />
@@ -831,7 +1093,7 @@ export default function BatteryTamagotchiPage() {
             <RingGauge
               value={pulse}
               label="Pulse"
-              sublabel={`Avg Efficiency · ${EFFICIENCY.streakWins}-win streak`}
+              sublabel={`Avg Efficiency · ${efficiency.streakWins}-win streak`}
               color={T.green}
               size={170}
             />
@@ -846,10 +1108,10 @@ export default function BatteryTamagotchiPage() {
           borderBottom: `1px solid ${T.cardBorder}`,
         }}>
           {[
-            { label: "30-Day Eff.", value: `${EFFICIENCY.last30Days}%` },
-            { label: "Best Week", value: `${EFFICIENCY.bestWeek}%` },
-            { label: "Max Range", value: `${BATTERY.maxRangeMiles} mi` },
-            { label: "Degradation", value: `${BATTERY.degradationPct}%` },
+            { label: "30-Day Eff.", value: `${efficiency.last30Days}%` },
+            { label: "Best Week", value: `${efficiency.bestWeek}%` },
+            { label: "Max Range", value: `${battery.maxRangeMiles} mi` },
+            { label: "Degradation", value: `${battery.degradationPct}%` },
           ].map((stat) => (
             <div key={stat.label} style={{
               background: T.card,
@@ -867,7 +1129,7 @@ export default function BatteryTamagotchiPage() {
         </div>
 
         {/* ── Live Drive ── */}
-        {LIVE_DRIVE.active && (
+        {liveDrive.active && (
           <div style={{ marginTop: "2rem" }}>
             <div style={{
               fontSize: "10px",
@@ -885,7 +1147,7 @@ export default function BatteryTamagotchiPage() {
                 background: T.green,
                 animation: "core-pulse 1.5s ease-in-out infinite",
               }} />
-              Current Drive · {LIVE_DRIVE.elapsed}
+              {liveDrive.route} · {liveDrive.elapsed}
             </div>
             <div style={{
               display: "grid",
@@ -895,12 +1157,12 @@ export default function BatteryTamagotchiPage() {
               border: `1px solid ${T.cardBorder}`,
             }}>
               {[
-                { label: "Distance", value: `${LIVE_DRIVE.distanceMi} mi` },
-                { label: "Efficiency", value: `${LIVE_DRIVE.efficiency}%`, color: T.green },
-                { label: "Avg Speed", value: `${LIVE_DRIVE.avgSpeedMph} mph` },
-                { label: "Energy Used", value: `${LIVE_DRIVE.energyKwh} kWh` },
-                { label: "Range Left", value: `${LIVE_DRIVE.rangeRemainingMi} mi` },
-                { label: "Battery", value: `${LIVE_DRIVE.batteryPct}%` },
+                { label: "Distance", value: `${liveDrive.distanceMi} mi` },
+                { label: "Efficiency", value: `${liveDrive.efficiency}%`, color: T.green },
+                { label: "Avg Speed", value: `${liveDrive.avgSpeedMph} mph` },
+                { label: "Energy Used", value: `${liveDrive.energyKwh} kWh` },
+                { label: "Range Left", value: `${liveDrive.rangeRemainingMi} mi` },
+                { label: "Battery", value: `${liveDrive.batteryPct}%` },
               ].map((stat) => (
                 <div key={stat.label} style={{ background: T.card, padding: "1rem", textAlign: "center" }}>
                   <div style={{ fontSize: "9px", letterSpacing: "0.18em", color: T.textDim, textTransform: "uppercase" as const, marginBottom: "0.35rem" }}>
@@ -974,7 +1236,7 @@ export default function BatteryTamagotchiPage() {
               gap: "1px",
               background: T.cardBorder,
             }}>
-              {RECENT_CHARGES.map((charge, i) => (
+              {charges.map((charge, i) => (
                 <div key={i} style={{
                   background: T.card,
                   padding: "0.85rem 1rem",
@@ -1030,7 +1292,7 @@ export default function BatteryTamagotchiPage() {
               gap: "1px",
               background: T.cardBorder,
             }}>
-              {RECENT_DRIVES.map((drive, i) => (
+              {drives.map((drive, i) => (
                 <div key={i} style={{
                   background: T.card,
                   padding: "0.85rem 1rem",

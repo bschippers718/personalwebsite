@@ -6,11 +6,11 @@ export const metadata: Metadata = {
 };
 
 const stats = [
+  { label: "Companies", value: "3 Founded" },
+  { label: "Exits", value: "2 Acquired" },
+  { label: "Apple", value: "App of the Year", highlight: true },
   { label: "Mile PR", value: "4:19" },
-  { label: "HappyFunCorp", value: "Inc 5000" },
-  { label: "TechCrunch", value: "6 Articles" },
-  { label: "Education", value: "Bates '04" },
-  { label: "Recognition", value: "Edison Nominee", highlight: true },
+  { label: "Recognition", value: "Edison Nominee" },
 ];
 
 const career = [
@@ -24,10 +24,28 @@ const career = [
   },
   {
     period: "2012 → 2018",
-    title: "CEO & Founder",
+    title: "CEO & Co-Founder",
     description: "HappyFunCorp — Product engineering studio · Inc 5000 · Edison Nominee",
-    tag: "ACQUIRED 2×",
+    tag: "ACQUIRED BY TINY",
     tagClass: "tag-acquired",
+    tagHref: "https://www.tinycapital.com/",
+  },
+  {
+    period: "2006 → 2009",
+    title: "CEO & Co-Founder",
+    description: "Workstreamer — Real-time business intelligence platform · Raised from Austin Ventures",
+    tag: "ACQUIRED BY WORKTHINK",
+    tagClass: "tag-acquired",
+  },
+];
+
+const education = [
+  {
+    period: "2000 → 2004",
+    title: "B.A. American Cultural Studies · Minor in Education",
+    description: "Bates College — #1 Squash · Team Captain · Top 32 Nationally",
+    tag: "SCHOLAR-ATHLETE",
+    tagClass: "tag-education",
   },
   {
     period: "2015",
@@ -36,12 +54,110 @@ const career = [
     tag: "HONORED",
     tagClass: "tag-award",
   },
+];
+
+const notableWork = [
   {
-    period: "2000 → 2004",
-    title: "B.A. American Cultural Studies",
-    description: "Bates College — #1 Squash · Team Captain · Top 32 Nationally",
-    tag: "SCHOLAR-ATHLETE",
-    tagClass: "tag-education",
+    brand: "Twitter",
+    project: "NFL Integration",
+    description: "Real-time game experiences and content integration bringing the NFL directly into the Twitter timeline.",
+    color: "#1DA1F2",
+  },
+  {
+    brand: "Periscope",
+    project: "Live Video Platform",
+    description: "Helped build the live-streaming platform that changed how the world broadcasts, acquired by Twitter.",
+    color: "#e64646",
+  },
+  {
+    brand: "Disney+",
+    project: "Formerly Disney Anywhere",
+    description: "Cross-platform digital movie and content delivery before it evolved into the streaming giant.",
+    color: "#0057e7",
+  },
+  {
+    brand: "Nike",
+    project: "SNKRS",
+    description: "The sneaker drop platform that created a new category of commerce and culture for Nike.",
+    color: "#ff6b35",
+  },
+  {
+    brand: "Samsung",
+    project: "Samsung Health",
+    description: "Health and fitness tracking platform shipped on hundreds of millions of Galaxy devices worldwide.",
+    color: "#1428a0",
+  },
+  {
+    brand: "Audible",
+    project: "Audiobook Platform",
+    description: "Product engineering for the world's largest audiobook platform, an Amazon company.",
+    color: "#f8991d",
+  },
+];
+
+const press = [
+  {
+    title: "Tiny Acquires HappyFunCorp for $30M",
+    pub: "TechCrunch · Jul 2023",
+    author: "Christine Hall",
+    href: "https://techcrunch.com/2023/07/03/tiny-acquires-happyfuncorp-the-prolific-firm-thats-built-apps-for-twitter-amazon-and-more-for-30m/",
+    tag: "ACQUISITION",
+  },
+  {
+    title: "Founders Riding the EV Sales Wave",
+    pub: "TechCrunch · Jun 2021",
+    author: "Kirsten Korosec",
+    href: "https://techcrunch.com/2021/06/15/founders-ben-schippers-and-evette-ellis-are-riding-the-ev-sales-wave/",
+    tag: "FEATURE",
+  },
+  {
+    title: "The Tesla Effect & Next Wave of EV Startups",
+    pub: "TechCrunch · TC Sessions: Mobility · Jun 2021",
+    author: "Kirsten Korosec",
+    href: "https://techcrunch.com/2021/06/04/tezlab-ceo-ben-schippers-to-discuss-the-tesla-effect-and-the-next-wave-of-ev-startups-at-tc-sessions-mobility-2021/",
+    tag: "SPEAKER",
+  },
+  {
+    title: "Building Tech Stacks That Go the Distance",
+    pub: "TechCrunch · TC Early Stage · Jun 2020",
+    author: "Matt Burns",
+    href: "https://techcrunch.com/2020/06/17/happyfuncorps-ben-schippers-and-jon-evans-will-talk-tech-stacks-at-tc-early-stage",
+    tag: "SPEAKER",
+  },
+  {
+    title: "Younger, Faster, Stronger",
+    pub: "Inc. Magazine · Nov 2015",
+    author: "Alix Stuart",
+    href: "https://www.inc.com/magazine/201511/alix-stuart/younger-faster-stronger.html",
+    tag: "PROFILE",
+  },
+  {
+    title: "Engineering Firm HappyFunCorp Eyes More Acquisitions",
+    pub: "TechCrunch · Aug 2015",
+    author: "Jon Russell",
+    href: "https://techcrunch.com/2015/08/16/happyfuncorp-acquisitions",
+    tag: "FEATURE",
+  },
+  {
+    title: "Injecting Your Company Culture With Gratitude",
+    pub: "Fast Company · May 2015",
+    author: "Vivian Giang",
+    href: "https://www.fastcompany.com/3045128/this-web-development-shops-passion-project-injecting-your-company-culture-",
+    tag: "FEATURE",
+  },
+  {
+    title: "Built In Brooklyn: HappyFunCorp",
+    pub: "TechCrunch · Jan 2015",
+    author: "Anthony Ha",
+    href: "https://techcrunch.com/2015/01/12/built-in-brooklyn-happyfuncorp",
+    tag: "VIDEO",
+  },
+  {
+    title: "Workstreamer Is A Realtime Listening Platform for Businesses",
+    pub: "TechCrunch · Apr 2010",
+    author: "Leena Rao",
+    href: "https://techcrunch.com/2010/04/23/workstreamer-is-a-realtime-listening-and-tracking-platform-for-businesses/",
+    tag: "LAUNCH",
   },
 ];
 
@@ -300,27 +416,151 @@ export default function HomePage() {
                   {item.description}
                 </div>
               </div>
-              <span
-                className={item.tagClass}
-                style={{
-                  fontSize: "10px",
-                  letterSpacing: "0.06em",
-                  fontWeight: 600,
-                  padding: "0.2rem 0.6rem",
-                  borderRadius: "4px",
-                  border: "1px solid",
-                  whiteSpace: "nowrap",
-                  alignSelf: "start",
-                }}
-              >
-                {item.tag}
-              </span>
+              {item.tagHref ? (
+                <a
+                  href={item.tagHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={item.tagClass}
+                  style={{
+                    fontSize: "10px",
+                    letterSpacing: "0.06em",
+                    fontWeight: 600,
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: "4px",
+                    border: "1px solid",
+                    whiteSpace: "nowrap",
+                    alignSelf: "start",
+                    textDecoration: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  {item.tag} ↗
+                </a>
+              ) : (
+                <span
+                  className={item.tagClass}
+                  style={{
+                    fontSize: "10px",
+                    letterSpacing: "0.06em",
+                    fontWeight: 600,
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: "4px",
+                    border: "1px solid",
+                    whiteSpace: "nowrap",
+                    alignSelf: "start",
+                  }}
+                >
+                  {item.tag}
+                </span>
+              )}
             </div>
           ))}
         </div>
       </section>
 
-      {/* Writing */}
+      {/* Notable Work */}
+      <section id="notable-work" className="section-container">
+        <div style={{ marginBottom: "2rem" }}>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              marginBottom: "0.5rem",
+            }}
+          >
+            NOTABLE WORK
+          </h2>
+          <p style={{ color: "var(--dim)", fontSize: "0.85rem" }}>
+            Products built at HappyFunCorp for the world&apos;s biggest brands.
+          </p>
+        </div>
+
+        {/* App of the Year Highlight */}
+        <div className="highlight-banner">
+          <div className="highlight-banner-inner">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.2rem, 3vw, 1.6rem)",
+                  fontWeight: 800,
+                  color: "var(--gold)",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                Apple App of the Year
+              </span>
+            </div>
+            <span
+              style={{
+                fontSize: "11px",
+                letterSpacing: "0.1em",
+                color: "var(--dim)",
+              }}
+            >
+              AWARDED BY APPLE
+            </span>
+          </div>
+        </div>
+
+        {/* Brand Grid */}
+        <div className="notable-work-grid">
+          {notableWork.map((item, i) => (
+            <div
+              key={i}
+              className="notable-work-card"
+              style={{
+                borderTop: `2px solid ${item.color}`,
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 800,
+                    fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)",
+                    letterSpacing: "-0.01em",
+                    marginBottom: "0.15rem",
+                  }}
+                >
+                  {item.brand}
+                </div>
+                <div
+                  style={{
+                    fontSize: "11px",
+                    letterSpacing: "0.08em",
+                    color: item.color,
+                    fontWeight: 600,
+                    marginBottom: "0.65rem",
+                  }}
+                >
+                  {item.project}
+                </div>
+              </div>
+              <div
+                style={{
+                  color: "var(--dim)",
+                  fontSize: "0.8rem",
+                  lineHeight: 1.65,
+                }}
+              >
+                {item.description}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Writing & Press */}
       <section id="writing" className="section-container">
         <div style={{ marginBottom: "2rem" }}>
           <h2
@@ -332,13 +572,95 @@ export default function HomePage() {
               marginBottom: "0.5rem",
             }}
           >
-            WRITING
+            WRITING & PRESS
           </h2>
           <p style={{ color: "var(--dim)", fontSize: "0.85rem" }}>
             Published in TechCrunch, FastCompany, Forbes, and Inc.
           </p>
         </div>
 
+        {/* Press & Features */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1px",
+            border: "1px solid var(--line)",
+            background: "var(--line)",
+            marginBottom: "2rem",
+          }}
+        >
+          {press.map((item) => (
+            <a
+              key={item.title}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="press-row"
+              style={{ background: "var(--base)" }}
+            >
+              <div style={{ minWidth: 0, flex: 1 }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                    display: "block",
+                  }}
+                >
+                  {item.title}
+                </span>
+                <span
+                  className="press-pub-mobile"
+                  style={{ fontSize: "11px", color: "var(--ghost)" }}
+                >
+                  {item.pub}
+                </span>
+              </div>
+              <span
+                className="press-pub-desktop"
+                style={{
+                  fontSize: "11px",
+                  color: "var(--ghost)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {item.pub}
+              </span>
+              <span
+                className={item.tag === "PROFILE" || item.tag === "ACQUISITION" ? "tag-acquired" : item.tag === "SPEAKER" ? "tag-current" : "tag-education"}
+                style={{
+                  fontSize: "9px",
+                  letterSpacing: "0.06em",
+                  fontWeight: 600,
+                  padding: "0.15rem 0.5rem",
+                  borderRadius: "4px",
+                  border: "1px solid",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {item.tag}
+              </span>
+            </a>
+          ))}
+        </div>
+
+        {/* Section label for authored articles */}
+        <div style={{ marginBottom: "0.75rem" }}>
+          <div
+            style={{
+              fontSize: "10px",
+              letterSpacing: "0.2em",
+              color: "var(--ghost)",
+              textTransform: "uppercase" as const,
+              fontWeight: 500,
+            }}
+          >
+            Authored Articles
+          </div>
+        </div>
+
+        {/* Authored Articles */}
         <div
           style={{
             display: "flex",
@@ -575,6 +897,83 @@ export default function HomePage() {
                 }}
               >
                 {race.badge}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Education */}
+      <section id="education" className="section-container">
+        <div style={{ marginBottom: "2rem" }}>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              marginBottom: "0.5rem",
+            }}
+          >
+            EDUCATION
+          </h2>
+          <p style={{ color: "var(--dim)", fontSize: "0.85rem" }}>
+            Bates College, Class of 2004.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1px",
+            border: "1px solid var(--line)",
+            background: "var(--line)",
+          }}
+        >
+          {education.map((item, i) => (
+            <div
+              key={i}
+              className="career-row-grid"
+              style={{ background: "var(--base)" }}
+            >
+              <span style={{ fontSize: "12px", color: "var(--ghost)" }}>
+                {item.period}
+              </span>
+              <div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "1rem",
+                  }}
+                >
+                  {item.title}
+                </div>
+                <div
+                  style={{
+                    color: "var(--dim)",
+                    fontSize: "0.85rem",
+                    marginTop: "0.15rem",
+                  }}
+                >
+                  {item.description}
+                </div>
+              </div>
+              <span
+                className={item.tagClass}
+                style={{
+                  fontSize: "10px",
+                  letterSpacing: "0.06em",
+                  fontWeight: 600,
+                  padding: "0.2rem 0.6rem",
+                  borderRadius: "4px",
+                  border: "1px solid",
+                  whiteSpace: "nowrap",
+                  alignSelf: "start",
+                }}
+              >
+                {item.tag}
               </span>
             </div>
           ))}

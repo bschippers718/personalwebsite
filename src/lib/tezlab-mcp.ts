@@ -77,24 +77,32 @@ export async function exchangeCodeForTokens(params: {
   token_type: string;
   expires_in?: number;
 }> {
-  const res = await fetch(`${MCP_SERVER}/oauth/token`, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      grant_type: "authorization_code",
-      code: params.code,
-      client_id: params.clientId,
-      redirect_uri: params.redirectUri,
-      code_verifier: params.codeVerifier,
-    }),
+  const body = new URLSearchParams({
+    grant_type: "authorization_code",
+    code: params.code,
+    client_id: params.clientId,
+    redirect_uri: params.redirectUri,
+    code_verifier: params.codeVerifier,
   });
 
-  if (!res.ok) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) await sleep(1000 * Math.pow(2, attempt - 1));
+
+    const res = await fetch(`${MCP_SERVER}/oauth/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    });
+
+    if (res.ok) return res.json();
+
+    if (isRetryable(res.status) && attempt < 2) continue;
+
     const text = await res.text();
     throw new Error(`Token exchange failed: ${res.status} ${text}`);
   }
 
-  return res.json();
+  throw new Error("Token exchange: max retries exceeded");
 }
 
 // ─── Token Refresh ───────────────────────────────────────────────────────────
@@ -126,7 +134,15 @@ export async function refreshAccessToken(params: {
   return res.json();
 }
 
-// ─── MCP JSON-RPC Call ───────────────────────────────────────────────────────
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+function isRetryable(status: number): boolean {
+  return status === 429 || status === 500 || status === 502 || status === 503 || status === 504;
+}
+
+// ─── MCP JSON-RPC Call (with retry) ─────────────────────────────────────────
 
 let rpcId = 0;
 
@@ -135,6 +151,7 @@ export async function mcpCall(
   method: string,
   params?: Record<string, unknown>,
   sessionId?: string,
+  maxRetries = 3,
 ): Promise<{ result?: unknown; error?: { code: number; message: string }; sessionId?: string }> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -146,26 +163,38 @@ export async function mcpCall(
     headers["Mcp-Session-Id"] = sessionId;
   }
 
-  const res = await fetch(MCP_SERVER, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      id: ++rpcId,
-      method,
-      params: params || {},
-    }),
+  const body = JSON.stringify({
+    jsonrpc: "2.0",
+    id: ++rpcId,
+    method,
+    params: params || {},
   });
 
-  const newSessionId = res.headers.get("Mcp-Session-Id") || undefined;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    if (attempt > 0) {
+      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 8000);
+      await sleep(delay);
+    }
 
-  if (!res.ok) {
-    const text = await res.text();
-    return { error: { code: res.status, message: text }, sessionId: newSessionId };
+    try {
+      const res = await fetch(MCP_SERVER, { method: "POST", headers, body });
+      const newSessionId = res.headers.get("Mcp-Session-Id") || undefined;
+
+      if (!res.ok) {
+        if (isRetryable(res.status) && attempt < maxRetries) continue;
+        const text = await res.text();
+        return { error: { code: res.status, message: text }, sessionId: newSessionId };
+      }
+
+      const json = await res.json();
+      return { result: json.result, error: json.error, sessionId: newSessionId };
+    } catch (err) {
+      if (attempt < maxRetries) continue;
+      return { error: { code: 0, message: err instanceof Error ? err.message : "Network error" } };
+    }
   }
 
-  const json = await res.json();
-  return { result: json.result, error: json.error, sessionId: newSessionId };
+  return { error: { code: 0, message: "Max retries exceeded" } };
 }
 
 // ─── High-Level: Initialize + Call Tool ──────────────────────────────────────
@@ -199,4 +228,48 @@ export async function callTool(
   }
 
   return result.result;
+}
+
+// ─── Batch: single session, multiple tool calls ─────────────────────────────
+
+export async function callToolsBatch(
+  accessToken: string,
+  calls: Array<{ tool: string; args?: Record<string, unknown> }>,
+): Promise<Array<{ tool: string; result?: unknown; error?: string }>> {
+  const init = await mcpCall(accessToken, "initialize", {
+    protocolVersion: "2025-03-26",
+    capabilities: {},
+    clientInfo: { name: "battery-tamagotchi", version: "1.0.0" },
+  });
+
+  const sessionId = init.sessionId;
+
+  if (sessionId) {
+    await mcpCall(accessToken, "notifications/initialized", {}, sessionId);
+  }
+
+  const results: Array<{ tool: string; result?: unknown; error?: string }> = [];
+
+  for (let i = 0; i < calls.length; i++) {
+    const call = calls[i];
+    if (i > 0) await sleep(200);
+
+    try {
+      const res = await mcpCall(
+        accessToken,
+        "tools/call",
+        { name: call.tool, arguments: call.args || {} },
+        sessionId,
+      );
+      if (res.error) {
+        results.push({ tool: call.tool, error: JSON.stringify(res.error) });
+      } else {
+        results.push({ tool: call.tool, result: res.result });
+      }
+    } catch (err) {
+      results.push({ tool: call.tool, error: err instanceof Error ? err.message : "Unknown" });
+    }
+  }
+
+  return results;
 }

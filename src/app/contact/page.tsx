@@ -8,22 +8,23 @@ export const metadata: Metadata = {
 const contacts = [
   {
     num: "01",
-    label: "Email",
-    href: "mailto:ben@benschippers.com",
-    display: "ben@benschippers.com",
-  },
-  {
-    num: "02",
     label: "GitHub",
     href: "https://github.com/bschippers718",
     display: "github.com/bschippers718",
     external: true,
   },
   {
-    num: "03",
+    num: "02",
     label: "LinkedIn",
     href: "https://linkedin.com/in/benschippers",
     display: "linkedin.com/in/benschippers",
+    external: true,
+  },
+  {
+    num: "03",
+    label: "OpenClaw",
+    href: "https://www.openclaw.ai/",
+    display: "openclaw.ai 🦞",
     external: true,
   },
 ];
