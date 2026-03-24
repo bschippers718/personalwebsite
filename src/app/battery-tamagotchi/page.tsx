@@ -613,7 +613,7 @@ function mapBattery(raw: unknown): typeof BATTERY {
     maxRangeMiles: maxRange ? Math.round(maxRange) : (curCap && oemCap ? Math.round((curCap / oemCap) * BATTERY.originalRangeMiles) : BATTERY.maxRangeMiles),
     originalRangeMiles: origRange ? Math.round(origRange) : BATTERY.originalRangeMiles,
     trend: (b.trend ?? b.trend_text ?? b.health_score ?? BATTERY.trend) as string,
-    trendDirection: ((b.trend_direction ?? b.trendDirection ?? BATTERY.trendDirection) as "up" | "down"),
+    trendDirection: ((b.trend_direction ?? b.trendDirection ?? BATTERY.trendDirection) as typeof BATTERY.trendDirection),
   };
 }
 
