@@ -33,54 +33,40 @@ const statusLabel: Record<Project["status"], string> = {
 
 export default function ProjectsPage() {
   return (
-    <div>
-      <section className="mb-20 pt-8">
-        <div className="mb-6">
-          <span
-            className="text-xs tracking-widest uppercase text-[var(--accent-dim)]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+    <div style={{ marginTop: "3rem" }}>
+      <section style={{ marginBottom: "5rem" }}>
+        <div style={{ marginBottom: "1.5rem" }}>
+          <span style={{ fontSize: "11px", letterSpacing: "0.35em", textTransform: "uppercase", color: "var(--ghost)" }}>
             Work
           </span>
         </div>
-        <h1
-          className="text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.0] text-[var(--fg)] mb-10"
-          style={{ fontFamily: "var(--font-display)", fontWeight: 800, letterSpacing: "-0.03em" }}
-        >
-          Projects.
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1.0, color: "var(--bright)", marginBottom: "2.5rem", fontWeight: 800, letterSpacing: "-0.03em" }}>
+          PROJECTS.
         </h1>
-        <p
-          className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-[30rem] italic"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
-          Things I&apos;ve built, shipped, or am currently working on.
+        <p style={{ fontSize: "0.95rem", color: "var(--dim)", lineHeight: 1.7, maxWidth: "32rem" }}>
+          Things I've built, shipped, or am currently working on.
         </p>
       </section>
 
-      <div className="border-t border-[var(--border)]">
+      <div>
         {projects.map((project, i) => (
           <div
             key={i}
-            className="py-10 border-b border-[var(--border)] grid grid-cols-[2.5rem_1fr] gap-6"
+            style={{ paddingBottom: "2.5rem", borderBottom: "1px solid var(--line)", display: "grid", gridTemplateColumns: "2.5rem 1fr", gap: "1.5rem" }}
           >
-            <div
-              className="text-xs text-[var(--fg-faint)] pt-1 tabular-nums text-right"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <div style={{ fontSize: "11px", color: "var(--ghost)", paddingTop: "0.15rem", textAlign: "right", fontFamily: "var(--font-mono)" }}>
               {String(i + 1).padStart(2, "0")}
             </div>
             <div>
-              <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
-                <h2
-                  className="text-2xl text-[var(--fg)]"
-                  style={{ fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "-0.02em" }}
-                >
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
+                <h2 style={{ fontSize: "1.5rem", color: "var(--bright)", fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                   {project.url ? (
                     <a
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-[var(--accent)] transition-colors"
+                      className="contact-link"
+                      style={{ color: "inherit" }}
                     >
                       {project.name} ↗
                     </a>
@@ -88,26 +74,19 @@ export default function ProjectsPage() {
                     project.name
                   )}
                 </h2>
-                <span
-                  className="text-xs text-[var(--fg-faint)] tracking-widest uppercase mt-1"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {project.year} &middot; {statusLabel[project.status]}
+                <span style={{ fontSize: "11px", color: "var(--ghost)", letterSpacing: "0.15em", textTransform: "uppercase", marginTop: "0.25rem", fontFamily: "var(--font-mono)" }}>
+                  {project.year} · {statusLabel[project.status]}
                 </span>
               </div>
-              <p
-                className="text-[var(--fg-muted)] leading-relaxed mb-4"
-                style={{ fontFamily: "var(--font-serif)", fontSize: "1.05rem" }}
-              >
+              <p style={{ color: "var(--dim)", lineHeight: 1.7, marginBottom: "1rem", fontFamily: "var(--font-mono)", fontSize: "0.95rem" }}>
                 {project.description}
               </p>
               {project.tags && (
-                <div className="flex flex-wrap gap-2">
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs text-[var(--fg-faint)] border border-[var(--border)] rounded-sm"
-                      style={{ fontFamily: "var(--font-display)" }}
+                      style={{ fontSize: "10px", padding: "0.15rem 0.5rem", background: "var(--raised)", border: "1px solid var(--line)", color: "var(--dim)", borderRadius: "3px", fontFamily: "var(--font-mono)" }}
                     >
                       {tag}
                     </span>

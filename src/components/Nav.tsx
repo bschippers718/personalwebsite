@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/", label: "Thoughts" },
+  { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
 ];
@@ -13,34 +13,34 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <header className="w-full border-b border-[var(--border)]">
-      <nav className="max-w-[52rem] mx-auto px-8 py-5 flex items-center justify-between">
+    <nav className="fixed top-0 w-full z-50 border-b border-[var(--line)] bg-[rgba(7,7,10,0.8)] backdrop-blur-[20px]">
+      <div className="max-w-[72rem] mx-auto px-6 h-12 flex items-center justify-between">
         <Link
           href="/"
-          className="text-[var(--accent)] hover:text-[var(--fg)] transition-colors"
-          style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.9rem", letterSpacing: "0.05em" }}
+          className="hover:opacity-80 transition-opacity"
+          style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "0.9rem", letterSpacing: "0.1em", color: "var(--bright)" }}
         >
-          BS
+          BEN <span style={{ color: "var(--ember)" }}>SCHIPPERS</span>
         </Link>
-        <div className="flex gap-1" style={{ fontFamily: "var(--font-display)" }}>
+        <div className="flex gap-3 sm:gap-6" style={{ fontFamily: "var(--font-mono)" }}>
           {links.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1.5 text-xs tracking-widest uppercase transition-colors rounded-sm ${
-                  active
-                    ? "bg-[var(--bg-subtle)] text-[var(--fg)]"
-                    : "text-[var(--fg-muted)] hover:text-[var(--fg)]"
-                }`}
+                className="text-[9px] sm:text-xs tracking-wider sm:tracking-widest uppercase transition-colors"
+                style={{
+                  color: active ? "var(--ember)" : "var(--ghost)",
+                  fontWeight: active ? 600 : 400,
+                }}
               >
                 {link.label}
               </Link>
             );
           })}
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }

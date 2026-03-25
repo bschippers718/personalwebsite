@@ -31,55 +31,40 @@ const links: ContactLink[] = [
 
 export default function ContactPage() {
   return (
-    <div>
-      <section className="mb-20 pt-8">
-        <div className="mb-6">
-          <span
-            className="text-xs tracking-widest uppercase text-[var(--accent-dim)]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+    <div style={{ marginTop: "3rem" }}>
+      <section style={{ marginBottom: "5rem" }}>
+        <div style={{ marginBottom: "1.5rem" }}>
+          <span style={{ fontSize: "11px", letterSpacing: "0.35em", textTransform: "uppercase", color: "var(--ghost)" }}>
             Say Hello
           </span>
         </div>
-        <h1
-          className="text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.0] text-[var(--fg)] mb-10"
-          style={{ fontFamily: "var(--font-display)", fontWeight: 800, letterSpacing: "-0.03em" }}
-        >
-          Contact.
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1.0, color: "var(--bright)", marginBottom: "2.5rem", fontWeight: 800, letterSpacing: "-0.03em" }}>
+          CONTACT.
         </h1>
-        <p
-          className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-[30rem] italic"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
+        <p style={{ fontSize: "0.95rem", color: "var(--dim)", lineHeight: 1.7, maxWidth: "32rem" }}>
           The best way to reach me.
         </p>
       </section>
 
-      <div className="border-t border-[var(--border)]">
+      <div style={{ borderTop: "1px solid var(--line)" }}>
         {links.map((link, i) => (
           <div
             key={i}
-            className="py-8 border-b border-[var(--border)] grid grid-cols-[2.5rem_1fr] gap-6"
+            style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--line)", display: "grid", gridTemplateColumns: "2.5rem 1fr", gap: "1.5rem" }}
           >
-            <div
-              className="text-xs text-[var(--fg-faint)] pt-1 tabular-nums text-right"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <div style={{ fontSize: "11px", color: "var(--ghost)", paddingTop: "0.15rem", textAlign: "right", fontFamily: "var(--font-mono)" }}>
               {String(i + 1).padStart(2, "0")}
             </div>
-            <div className="flex items-baseline justify-between gap-4 flex-wrap">
-              <span
-                className="text-2xl text-[var(--fg)]"
-                style={{ fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "-0.02em" }}
-              >
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+              <span style={{ fontSize: "1.5rem", color: "var(--bright)", fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 {link.label}
               </span>
               <a
                 href={link.href}
                 target={link.href.startsWith("mailto") ? undefined : "_blank"}
                 rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className="text-sm text-[var(--fg-muted)] hover:text-[var(--accent)] transition-colors"
-                style={{ fontFamily: "var(--font-display)" }}
+                className="contact-link"
+                style={{ fontSize: "0.875rem", color: "var(--dim)", textDecoration: "none", fontFamily: "var(--font-mono)" }}
               >
                 {link.description} ↗
               </a>
