@@ -33,7 +33,7 @@ const career = [
   {
     period: "2006 → 2009",
     title: "CEO & Co-Founder",
-    description: "Workstreamer — Real-time business intelligence platform · Raised from Austin Ventures",
+    description: "Workstreamer — Real-time business intelligence platform · Raised Series A from Austin Ventures",
     tag: "ACQUIRED BY WORKTHINK",
     tagClass: "tag-acquired",
   },
