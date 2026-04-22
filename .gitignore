@@ -35,3 +35,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# resume PDF intermediates (removed by scripts/resume-to-pdf.sh)
+resume-print.html
+resume-one-page-print.html

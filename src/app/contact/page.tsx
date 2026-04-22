@@ -13,19 +13,24 @@ interface ContactLink {
 
 const links: ContactLink[] = [
   {
-    label: "Email",
-    href: "mailto:ben@benschippers.com",
-    description: "ben@benschippers.com",
+    label: "X",
+    href: "https://x.com/bschippers",
+    description: "x.com/bschippers",
   },
   {
     label: "GitHub",
-    href: "https://github.com/benschippersmini",
-    description: "github.com/benschippersmini",
+    href: "https://github.com/bschippers718",
+    description: "github.com/bschippers718",
   },
   {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/benschippersmini",
-    description: "linkedin.com/in/benschippersmini",
+    label: "Website",
+    href: "https://benschippers.com",
+    description: "benschippers.com",
+  },
+  {
+    label: "Email",
+    href: "mailto:bschippers718@gmail.com",
+    description: "bschippers718@gmail.com",
   },
 ];
 
@@ -49,7 +54,7 @@ export default function ContactPage() {
       <div style={{ borderTop: "1px solid var(--line)" }}>
         {links.map((link, i) => (
           <div
-            key={i}
+            key={link.href}
             style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--line)", display: "grid", gridTemplateColumns: "2.5rem 1fr", gap: "1.5rem" }}
           >
             <div style={{ fontSize: "11px", color: "var(--ghost)", paddingTop: "0.15rem", textAlign: "right", fontFamily: "var(--font-mono)" }}>

@@ -41,8 +41,8 @@ export default async function HomePage() {
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 8vw, 8rem)", fontWeight: 800, lineHeight: 0.85, letterSpacing: "-0.02em", marginBottom: "1.5rem", wordBreak: "break-word", overflowWrap: "break-word" }}>
             BEN<br /><span style={{ color: "var(--ember)" }}>SCHIPPERS.</span>
           </h1>
-          <p style={{ color: "var(--dim)", fontSize: "clamp(0.8rem, 2.5vw, 0.95rem)", maxWidth: "32rem", margin: "0 auto 2.5rem", lineHeight: 1.7, padding: "0 0.5rem" }}>
-            Entrepreneur and product architect building at the intersection of technology and energy. I make software, run long distances, and think about how tech reshapes markets.
+          <p style={{ color: "var(--dim)", fontSize: "clamp(0.7rem, 2.5vw, 0.95rem)", maxWidth: "32rem", margin: "0 auto 2.5rem", lineHeight: 1.7, padding: "0 0.25rem" }}>
+            Entrepreneur and product architect building at the intersection of technology and energy, and co-chair of Brooklyn Roasting Company. I make software, run long distances, and think about how tech reshapes markets.
           </p>
           <div className="hero-buttons">
             <a href="#career" style={{ padding: "0.75rem 2rem", background: "var(--ember)", color: "var(--void)", fontFamily: "var(--font-mono)", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", textDecoration: "none", display: "inline-block" }}>
@@ -91,6 +91,7 @@ export default async function HomePage() {
         <div style={{ display: "flex", flexDirection: "column", gap: "1px", border: "1px solid var(--line)", background: "var(--line)" }}>
           {[
             { period: "2018 → Present", title: "CEO & Co-Founder", company: "TezLab — EV companion platform · National Grid energy partnership", tag: "ACTIVE", tagClass: "tag-current", isCurrent: true },
+            { period: "— → Present", title: "Co-Chair", company: "Brooklyn Roasting Company — Specialty coffee roaster & Brooklyn cafés", tag: "ACTIVE", tagClass: "tag-current", isCurrent: true },
             { period: "2012 → 2018", title: "CEO & Founder", company: "HappyFunCorp — Product engineering studio · Inc 5000 · Edison Nominee", tag: "ACQUIRED 2×", tagClass: "tag-acquired" },
             { period: "2015", title: "Keynote Speaker & Alumni Inductee", company: "Bates College — Scholar-Athlete Society", tag: "HONORED", tagClass: "tag-award" },
             { period: "2000 → 2004", title: "B.A. American Cultural Studies", company: "Bates College — #1 Squash · Team Captain · Top 32 Nationally", tag: "SCHOLAR-ATHLETE", tagClass: "tag-education" },
@@ -169,7 +170,7 @@ export default async function HomePage() {
           {[
             { name: "Grand Canyon Rim to Rim to Rim", detail: "~42 miles through the Grand Canyon · Under 10 hours", badge: "COMPLETED", badgeClass: "badge-neon" },
             { name: "NYCRUNS Father's Day Half Marathon", detail: "Brooklyn, NY · June 2014 · 1:19:41", badge: "2ND OVERALL", badgeClass: "badge-gold" },
-            { name: "Bates College Squash", detail: "#1 on ladder all 4 years · Team Captain · Top 32 nationally", badge: "SCHOLAR-ATHLETE", badgeClass: "badge-gold" },
+            { name: "Bates College Squash", detail: "#1 player on the team · Team Captain · Top 32 nationally", badge: "SCHOLAR-ATHLETE", badgeClass: "badge-gold" },
           ].map((race, i) => (
             <div key={i} className="race-card-flex" style={{ marginTop: i > 0 ? "1px" : 0 }}>
               <div>
