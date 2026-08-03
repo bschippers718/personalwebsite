@@ -8,6 +8,8 @@ export interface Project {
   download?: boolean;
   year: string;
   status: ProjectStatus;
+  statusLabel?: string;
+  highlight?: string;
   tags: string[];
 }
 
@@ -19,6 +21,17 @@ export const projects: Project[] = [
     year: "2018 →",
     status: "active",
     tags: ["React Native", "EV", "Energy"],
+  },
+  {
+    name: "Battery Health — For Tesla",
+    description:
+      "A focused iPhone app for understanding Tesla battery capacity, charge cycles, range trends, and fleet comparisons at a glance.",
+    url: "https://apps.apple.com/us/app/battery-health-for-tesla/id6764105268",
+    linkLabel: "View on the App Store",
+    year: "2026",
+    status: "active",
+    highlight: "Reached #1 among trending paid apps on the App Store.",
+    tags: ["iOS", "Tesla", "Battery Data"],
   },
   {
     name: "Sift",

@@ -35,12 +35,17 @@ export default function ProjectsPage() {
                 )}
               </h2>
               <span className="faint text-[0.72rem] font-medium tracking-wide uppercase whitespace-nowrap">
-                {statusMeta[project.status].label}
+                {project.statusLabel ?? statusMeta[project.status].label}
               </span>
             </div>
             <p className="dim mt-1.5 text-[0.9rem] leading-relaxed">
               {project.description}
             </p>
+            {project.highlight && (
+              <p className="mt-3 text-[0.86rem] font-medium text-[var(--ink)]">
+                {project.highlight}
+              </p>
+            )}
             <p className="faint mt-2 text-[0.78rem]">
               {project.tags.join(" · ")}
             </p>
