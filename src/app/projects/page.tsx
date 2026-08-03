@@ -23,8 +23,9 @@ export default function ProjectsPage() {
                 {project.url ? (
                   <a
                     href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target={project.download ? undefined : "_blank"}
+                    rel={project.download ? undefined : "noopener noreferrer"}
+                    download={project.download ? "Sift-0.6.7.zip" : undefined}
                     className="qlink"
                   >
                     {project.name}
@@ -43,6 +44,17 @@ export default function ProjectsPage() {
             <p className="faint mt-2 text-[0.78rem]">
               {project.tags.join(" · ")}
             </p>
+            {project.url && project.linkLabel && (
+              <a
+                href={project.url}
+                target={project.download ? undefined : "_blank"}
+                rel={project.download ? undefined : "noopener noreferrer"}
+                download={project.download ? "Sift-0.6.7.zip" : undefined}
+                className="inline-block mt-3 text-[0.82rem] qlink"
+              >
+                {project.linkLabel}
+              </a>
+            )}
           </article>
         ))}
       </div>

@@ -46,7 +46,7 @@ export default function HomePage() {
         />
         <GuideRow
           title="Projects"
-          description="EV software, ML leaderboards, computer vision, and this site."
+          description="EV software, focused social tools, shared AI, ML research, and computer vision."
           href="/projects"
         />
         <GuideRow

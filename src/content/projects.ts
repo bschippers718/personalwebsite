@@ -4,6 +4,8 @@ export interface Project {
   name: string;
   description: string;
   url?: string;
+  linkLabel?: string;
+  download?: boolean;
   year: string;
   status: ProjectStatus;
   tags: string[];
@@ -17,6 +19,27 @@ export const projects: Project[] = [
     year: "2018 →",
     status: "active",
     tags: ["React Native", "EV", "Energy"],
+  },
+  {
+    name: "Sift",
+    description:
+      "A Chrome extension that turns X into a focused, readable feed by filtering posts around the topics and lists you choose.",
+    url: "/downloads/Sift-0.6.7.zip",
+    linkLabel: "Download v0.6.7",
+    download: true,
+    year: "2026",
+    status: "wip",
+    tags: ["Chrome Extension", "X", "JavaScript"],
+  },
+  {
+    name: "Commons",
+    description:
+      "An open, shared AI assistant for groups with channels, auditable costs, swappable models, and self-hosting.",
+    url: "https://workstreamer.vercel.app",
+    linkLabel: "Visit Commons",
+    year: "2026",
+    status: "wip",
+    tags: ["Next.js", "AI", "Open Source"],
   },
   {
     name: "THE HIVE",
@@ -37,19 +60,12 @@ export const projects: Project[] = [
   {
     name: "Distill",
     description:
-      "Mobile app and web platform. React Native + Expo with a companion web dashboard.",
-    year: "2024",
-    status: "wip",
-    tags: ["Expo", "TypeScript", "Supabase"],
-  },
-  {
-    name: "BenSchippers.com",
-    description:
-      "This site. Built with Next.js, Drizzle ORM, and Neon Postgres.",
-    url: "https://benschippers.com",
+      "A streamlined interface for reading and organizing X, designed to make social feeds calmer and easier to navigate.",
+    url: "https://github.com/bschippers718/distill-app",
+    linkLabel: "View on GitHub",
     year: "2025",
-    status: "active",
-    tags: ["Next.js", "Postgres"],
+    status: "wip",
+    tags: ["Next.js", "TypeScript", "X"],
   },
 ];
 
