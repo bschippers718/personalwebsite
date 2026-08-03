@@ -1,0 +1,169 @@
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ring-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes core-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes core-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(0, 230, 118, 0.3),
+      0 0 60px rgba(0, 230, 118, 0.15),
+      inset 0 0 20px rgba(0, 230, 118, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(0, 230, 118, 0.5),
+      0 0 80px rgba(0, 230, 118, 0.25),
+      inset 0 0 30px rgba(0, 230, 118, 0.15);
+  }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.4; }
+  10% { opacity: 0.35; }
+  20% { opacity: 0.5; }
+  30% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  70% { opacity: 0.35; }
+  90% { opacity: 0.55; }
+}
+
+@keyframes particle-orbit-1 {
+  0% { transform: rotate(0deg) translateX(70px) rotate(0deg); opacity: 0.8; }
+  50% { opacity: 0.3; }
+  100% { transform: rotate(360deg) translateX(70px) rotate(-360deg); opacity: 0.8; }
+}
+
+@keyframes particle-orbit-2 {
+  0% { transform: rotate(120deg) translateX(85px) rotate(-120deg); opacity: 0.6; }
+  50% { opacity: 0.2; }
+  100% { transform: rotate(480deg) translateX(85px) rotate(-480deg); opacity: 0.6; }
+}
+
+@keyframes particle-orbit-3 {
+  0% { transform: rotate(240deg) translateX(60px) rotate(-240deg); opacity: 0.7; }
+  50% { opacity: 0.25; }
+  100% { transform: rotate(600deg) translateX(60px) rotate(-600deg); opacity: 0.7; }
+}
+
+@keyframes corona-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.08;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.15;
+  }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -20; }
+}
+
+.creature-ring {
+  transform-origin: center;
+  fill: none;
+}
+
+.ring-1 { animation: ring-spin 12s linear infinite; }
+.ring-2 { animation: ring-spin-reverse 18s linear infinite; }
+.ring-3 { animation: ring-spin 25s linear infinite; }
+.ring-4 { animation: ring-spin-reverse 35s linear infinite; }
+.ring-5 { animation: ring-spin 45s linear infinite; }
+
+.core-orb {
+  animation: core-pulse 3s ease-in-out infinite, core-glow 3s ease-in-out infinite;
+}
+
+.core-orb-spark {
+  animation: flicker 2s ease-in-out infinite;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #00e676;
+}
+
+.particle-1 { animation: particle-orbit-1 4s linear infinite; }
+.particle-2 { animation: particle-orbit-2 5.5s linear infinite; }
+.particle-3 { animation: particle-orbit-3 3.5s linear infinite; }
+
+.corona {
+  animation: corona-pulse 4s ease-in-out infinite;
+}
+
+.gauge-track {
+  transition: stroke-dashoffset 1s ease-out;
+}
+
+/* ── Responsive layouts ── */
+
+.tama-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+}
+
+.tama-substats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+}
+
+.tama-activity-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.tama-hud-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .tama-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tama-substats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tama-activity-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .tama-hud-body {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    justify-items: center;
+  }
+
+  .tama-hud-stats-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
