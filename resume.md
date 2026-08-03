@@ -101,11 +101,11 @@ Coverage and appearances include **TechCrunch**, **Fast Company**, **Forbes**, a
 
 ## Miles & ladder
 
-**Running (PRs)** · Mile **4:19** · 10K **32:44** · Half marathon **1:11:12**
+**Running (PRs)** · Mile **4:19** · 10K **32:44** · Half marathon **1:12:11**
 
 **Endurance** · Grand Canyon Rim-to-Rim-to-Rim — ~42 mi, under 10 hours  
 
-**Racing** · NYCRUNS Father’s Day Half (Brooklyn, Jun 2014) — **2nd overall**, 1:11:12  
+**Racing** · NYCRUNS Father’s Day Half (Brooklyn, Jun 2014) — **2nd overall**, 1:12:11  
 
 **Squash** · Bates College — #1 on ladder all four years, team captain, top 32 nationally  
 

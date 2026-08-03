@@ -14,7 +14,7 @@ export interface RaceResult {
 export const personalRecords: PersonalRecord[] = [
   { event: "Mile", mark: "4:19", detail: "4:19/mi pace", featured: true },
   { event: "10K", mark: "32:44", detail: "5:16/mi pace" },
-  { event: "Half Marathon", mark: "1:11:12", detail: "5:26/mi pace" },
+  { event: "Half Marathon", mark: "1:12:11", detail: "5:30/mi pace" },
 ];
 
 export const highlights: RaceResult[] = [
@@ -25,7 +25,7 @@ export const highlights: RaceResult[] = [
   },
   {
     name: "NYCRUNS Father's Day Half Marathon",
-    detail: "Brooklyn, NY · June 2014 · 1:19:41",
+    detail: "Brooklyn, NY · June 2014 · 1:12:11",
     result: "2nd Overall",
   },
   {

@@ -18,4 +18,4 @@
 
 **Labs:** TezLab · THE HIVE · Squash Analytics · Distill — stacks: React Native, Next.js, YOLOv8, Expo, Supabase.
 
-**Endurance & Bates:** Half **1:11:12** · 10K 32:44 · Grand Canyon R2R2R (under 10h) · NYCRUNS half 2nd OA · Bates squash #1 four years, captain, top 32 · B.A. American Cultural Studies + minor Education, scholar-athlete · 2015 Scholar-Athlete Society keynote.
+**Endurance & Bates:** Half **1:12:11** · 10K 32:44 · Grand Canyon R2R2R (under 10h) · NYCRUNS half 2nd OA · Bates squash #1 four years, captain, top 32 · B.A. American Cultural Studies + minor Education, scholar-athlete · 2015 Scholar-Athlete Society keynote.
