@@ -12,8 +12,8 @@ export interface RaceResult {
 }
 
 export const personalRecords: PersonalRecord[] = [
-  { event: "Mile", mark: "4:19", featured: true },
-  { event: "10K", mark: "32:44" },
+  { event: "Mile", mark: "4:19", detail: "4:19/mi pace", featured: true },
+  { event: "10K", mark: "32:44", detail: "5:16/mi pace" },
   { event: "Half Marathon", mark: "1:11:12", detail: "5:26/mi pace" },
 ];
 

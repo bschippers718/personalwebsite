@@ -18,7 +18,10 @@ export default function AthleticsPage() {
       {/* PRs */}
       <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-px bg-[var(--line)] border border-[var(--line)] rounded-lg overflow-hidden mb-14">
         {personalRecords.map((pr) => (
-          <div key={pr.event} className="bg-[var(--surface)] px-5 py-8 text-center">
+          <div
+            key={pr.event}
+            className="bg-[var(--surface)] min-h-36 px-5 py-7 text-center flex flex-col items-center justify-center"
+          >
             <div className="text-[1.9rem] leading-none font-medium tracking-tight text-[var(--ink)] tabular">
               {pr.mark}
             </div>
