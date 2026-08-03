@@ -103,7 +103,13 @@ export const career: CareerEntry[] = [
     title: "B.A. American Cultural Studies",
     org: "Bates College",
     detail:
-      "#1 squash player · Team captain · Top 32 nationally · Scholar-Athlete Society inductee and keynote speaker in 2015",
+      "#1 squash player · Team captain · Top 32 nationally",
+    highlights: [
+      {
+        text: "Scholar-Athlete Society inductee and keynote speaker in 2015.",
+        href: "https://gobatesbobcats.com/sports/2020/6/4/scholar-athlete-society-2015-Ben-Schippers",
+      },
+    ],
     status: "education",
     statusLabel: "Scholar-Athlete",
   },
