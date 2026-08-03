@@ -12,37 +12,29 @@ export default async function AdminPage() {
     <div>
       <ComposeBox />
 
-      <div>
-        <h2
-          className="text-sm text-[var(--fg-muted)] mb-6 uppercase tracking-widest"
-          style={{ fontFamily: "var(--font-mono)" }}
-        >
+      <div className="mt-12">
+        <h2 className="dim text-[0.85rem] mb-2">
           All thoughts ({thoughts.length})
         </h2>
 
         {thoughts.length === 0 ? (
-          <p className="text-sm text-[var(--fg-muted)] py-8 text-center">
-            No thoughts yet.
-          </p>
+          <p className="py-12 dim text-[0.95rem]">Nothing filed yet.</p>
         ) : (
-          <div>
-            {thoughts.map((thought) => (
-              <div
-                key={thought.id}
-                className="py-5 border-b border-[var(--border)] last:border-0"
-              >
-                <p className="text-sm text-[var(--fg)] whitespace-pre-wrap break-words mb-2">
-                  {thought.content}
-                </p>
-                <div className="flex items-center justify-between">
-                  <time className="text-xs text-[var(--fg-muted)]">
-                    {formatDistanceToNow(new Date(thought.createdAt), { addSuffix: true })}
-                  </time>
-                  <DeleteButton thoughtId={thought.id} />
-                </div>
+          thoughts.map((thought) => (
+            <div key={thought.id} className="py-5 border-b border-[var(--line)]">
+              <p className="text-[0.95rem] leading-relaxed whitespace-pre-wrap break-words text-[var(--ink)]">
+                {thought.content}
+              </p>
+              <div className="flex items-center justify-between mt-2">
+                <time className="faint text-[0.8rem]">
+                  {formatDistanceToNow(new Date(thought.createdAt), {
+                    addSuffix: true,
+                  })}
+                </time>
+                <DeleteButton thoughtId={thought.id} />
               </div>
-            ))}
-          </div>
+            </div>
+          ))
         )}
       </div>
     </div>

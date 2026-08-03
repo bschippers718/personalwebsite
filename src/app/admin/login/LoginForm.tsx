@@ -34,28 +34,23 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="password"
-          autoComplete="current-password"
-          className="w-full px-4 py-3 border border-[var(--border)] bg-transparent text-[var(--fg)] placeholder-[var(--fg-muted)] outline-none focus:border-[var(--accent)] transition-colors text-sm font-mono"
-          style={{ fontFamily: "var(--font-mono)" }}
-          disabled={loading}
-        />
-      </div>
-      {error && (
-        <p className="text-xs text-red-500">{error}</p>
-      )}
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        autoComplete="current-password"
+        className="w-full px-4 py-3 border border-[var(--line)] rounded-lg bg-[var(--surface)] placeholder-[var(--faint)] outline-none focus:border-[var(--faint)] text-[0.95rem] transition-colors"
+        disabled={loading}
+      />
+      {error && <p className="text-[0.82rem] accent">{error}</p>}
       <button
         type="submit"
         disabled={loading || !password}
-        className="w-full py-3 border border-[var(--fg)] text-[var(--fg)] text-sm hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:text-[var(--bg)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-3 rounded-lg bg-[var(--ink)] text-[var(--bg)] text-[0.9rem] font-medium hover:opacity-85 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-opacity"
       >
-        {loading ? "signing in..." : "sign in"}
+        {loading ? "Signing in..." : "Sign in"}
       </button>
     </form>
   );

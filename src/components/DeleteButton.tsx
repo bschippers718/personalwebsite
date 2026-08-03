@@ -36,13 +36,11 @@ export default function DeleteButton({ thoughtId }: DeleteButtonProps) {
       onClick={handleDelete}
       disabled={loading}
       onBlur={() => setConfirming(false)}
-      className={`text-xs transition-colors disabled:opacity-40 ${
-        confirming
-          ? "text-red-500 hover:text-red-700"
-          : "text-[var(--fg-muted)] hover:text-red-500"
+      className={`text-[0.8rem] cursor-pointer disabled:opacity-30 transition-colors ${
+        confirming ? "accent font-medium" : "faint hover:accent"
       }`}
     >
-      {loading ? "deleting..." : confirming ? "confirm delete" : "delete"}
+      {loading ? "Deleting..." : confirming ? "Confirm?" : "Delete"}
     </button>
   );
 }

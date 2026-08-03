@@ -48,39 +48,34 @@ export default function ComposeBox() {
   const maxChars = 500;
 
   return (
-    <form onSubmit={handleSubmit} className="mb-12">
-      <div className="border border-[var(--border)] focus-within:border-[var(--accent)] transition-colors">
+    <form onSubmit={handleSubmit}>
+      <div className="border border-[var(--line)] rounded-lg bg-[var(--surface)] focus-within:border-[var(--faint)] transition-colors">
         <textarea
           ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="What's on your mind?"
+          placeholder="New thought..."
           maxLength={maxChars}
           rows={4}
-          className="w-full px-4 py-3 bg-transparent text-[var(--fg)] placeholder-[var(--fg-muted)] resize-none outline-none text-sm font-mono"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="w-full px-4 py-3 bg-transparent placeholder-[var(--faint)] resize-none outline-none text-[0.95rem] rounded-lg"
           disabled={loading}
         />
-        <div className="flex items-center justify-between px-4 py-2 border-t border-[var(--border)]">
-          <span className={`text-xs ${charCount > maxChars * 0.9 ? "text-red-500" : "text-[var(--fg-muted)]"}`}>
+        <div className="flex items-center justify-between px-4 py-2.5 border-t border-[var(--line)]">
+          <span className={`text-[0.78rem] tabular ${charCount > maxChars * 0.9 ? "accent" : "faint"}`}>
             {charCount}/{maxChars}
           </span>
           <button
             type="submit"
             disabled={loading || !content.trim()}
-            className="text-xs px-4 py-1.5 border border-[var(--fg)] text-[var(--fg)] hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:text-[var(--bg)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="text-[0.82rem] font-medium text-[var(--accent)] hover:opacity-70 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-opacity"
           >
-            {loading ? "posting..." : "post"}
+            {loading ? "Posting..." : "Post"}
           </button>
         </div>
       </div>
-      {error && (
-        <p className="mt-2 text-xs text-red-500">{error}</p>
-      )}
-      <p className="mt-1.5 text-xs text-[var(--fg-muted)]">
-        ⌘↵ to submit
-      </p>
+      {error && <p className="mt-2 text-[0.82rem] accent">{error}</p>}
+      <p className="mt-2 text-[0.78rem] faint">Cmd+Enter to post</p>
     </form>
   );
 }

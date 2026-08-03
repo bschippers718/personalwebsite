@@ -6,27 +6,26 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Double-check auth (middleware also protects, this is a safeguard)
   const authed = await isAuthenticated();
   if (!authed) {
     redirect("/admin/login");
   }
 
   return (
-    <div>
+    <div className="measure pt-24 fade">
       <div className="flex items-center justify-between mb-10">
         <h1
-          className="text-2xl text-[var(--fg)]"
+          className="text-[2rem] font-normal tracking-tight text-[var(--ink)]"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          Admin
+          Thoughts
         </h1>
         <form action="/api/auth/logout" method="POST">
           <button
             type="submit"
-            className="text-xs text-[var(--fg-muted)] hover:text-[var(--accent)] transition-colors"
+            className="nlink text-[0.82rem] cursor-pointer"
           >
-            sign out
+            Sign out
           </button>
         </form>
       </div>
