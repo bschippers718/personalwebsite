@@ -18,6 +18,8 @@ export const projects: Project[] = [
     name: "TezLab",
     description:
       "EV companion platform with energy insights, battery health tracking, and utility partnerships.",
+    url: "https://www.tezlabapp.com/app",
+    linkLabel: "Visit TezLab",
     year: "2018 →",
     status: "active",
     tags: ["React Native", "EV", "Energy"],
@@ -58,6 +60,8 @@ export const projects: Project[] = [
     name: "THE HIVE",
     description:
       "ML talent intelligence leaderboard tracking the most valuable minds in AI.",
+    url: "https://www.the-hive.dev/leaderboard",
+    linkLabel: "View the leaderboard",
     year: "2025",
     status: "active",
     tags: ["Next.js", "ML Research", "Data"],
@@ -66,6 +70,8 @@ export const projects: Project[] = [
     name: "Squash Analytics",
     description:
       "YOLO-powered video analysis for squash matches with player tracking and shot detection.",
+    url: "https://github.com/bschippers718/squash",
+    linkLabel: "View on GitHub",
     year: "2025",
     status: "wip",
     tags: ["YOLOv8", "Python", "CV"],
