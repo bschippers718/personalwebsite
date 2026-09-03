@@ -38,12 +38,12 @@ export const projects: Project[] = [
   {
     name: "Sift",
     description:
-      "A Chrome extension that turns X into a focused, readable feed by filtering posts around the topics and lists you choose.",
-    url: "/downloads/Sift-0.6.7.zip",
-    linkLabel: "Download v0.6.7",
+      "A Chrome extension that turns X into a focused, readable feed by filtering posts around the topics and lists you choose, with an on-device AI Brief that summarizes what passed your filters. No servers, no tracking.",
+    url: "/downloads/Sift-1.0.1.zip",
+    linkLabel: "Download v1.0.1",
     download: true,
     year: "2026",
-    status: "wip",
+    status: "active",
     tags: ["Chrome Extension", "X", "JavaScript"],
   },
   {

@@ -25,7 +25,7 @@ export default function ProjectsPage() {
                     href={project.url}
                     target={project.download ? undefined : "_blank"}
                     rel={project.download ? undefined : "noopener noreferrer"}
-                    download={project.download ? "Sift-0.6.7.zip" : undefined}
+                    download={project.download ? project.url?.split("/").pop() : undefined}
                     className="qlink"
                   >
                     {project.name}
@@ -54,7 +54,7 @@ export default function ProjectsPage() {
                 href={project.url}
                 target={project.download ? undefined : "_blank"}
                 rel={project.download ? undefined : "noopener noreferrer"}
-                download={project.download ? "Sift-0.6.7.zip" : undefined}
+                download={project.download ? project.url?.split("/").pop() : undefined}
                 className="inline-block mt-3 text-[0.82rem] qlink"
               >
                 {project.linkLabel}
