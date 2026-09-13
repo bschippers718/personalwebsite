@@ -43,7 +43,7 @@ export const career: CareerEntry[] = [
     title: "Co-Founder & Co-CEO",
     org: "HappyFunCorp",
     detail:
-      "Bootstrapped product-engineering company built from two founders into a profitable, $12M-revenue studio.",
+      "Co-founded and led a bootstrapped product-engineering studio for fourteen years, growing it from two founders into a profitable, multimillion-dollar firm with no outside capital. Named to the Inc. 5000 and nominated for an Edison Award, the studio designed and shipped software used by hundreds of millions of people for some of the most recognized brands in the world.",
     highlights: [
       {
         text: "Acquired by Tiny for $30M in cash and stock in July 2023.",
@@ -69,12 +69,15 @@ export const career: CareerEntry[] = [
     statusLabel: "$30M exit",
   },
   {
-    period: "2009 → 2010",
+    period: "2006 → 2009",
     title: "Co-Founder",
     org: "Workstreamer",
     detail:
-      "Early real-time business-listening platform developed within Workthink, before social listening became an established category.",
+      "Founded Workstreamer, an early real-time business-listening platform that tracked and ranked what was happening at any company, years before social listening became an established category. Sold to Workthink in 2009.",
     highlights: [
+      {
+        text: "Acquired by Workthink in 2009.",
+      },
       {
         text: "Backed by Austin Ventures at seed.",
         href: "https://techcrunch.com/2010/04/23/workstreamer-is-a-realtime-listening-and-tracking-platform-for-businesses/",
@@ -87,8 +90,8 @@ export const career: CareerEntry[] = [
         text: "Aggregated and ranked real-time signals from news, social networks, jobs data, SEC filings, and CRM systems.",
       },
     ],
-    status: "venture",
-    statusLabel: "Venture-backed",
+    status: "acquired",
+    statusLabel: "Acquired",
   },
   {
     period: "— → NOW",
