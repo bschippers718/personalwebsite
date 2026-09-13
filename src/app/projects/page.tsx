@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import ChannelHeader from "@/components/ChannelHeader";
 import { projects, statusMeta } from "@/content/projects";
 
@@ -41,6 +42,23 @@ export default function ProjectsPage() {
             <p className="dim mt-1.5 text-[0.9rem] leading-relaxed">
               {project.description}
             </p>
+            {project.image && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block mt-4 overflow-hidden rounded-sm border border-[var(--line)]"
+              >
+                <Image
+                  src={project.image.src}
+                  alt={project.image.alt}
+                  width={project.image.width}
+                  height={project.image.height}
+                  sizes="(max-width: 640px) 100vw, 38rem"
+                  className="block w-full h-auto"
+                />
+              </a>
+            )}
             {project.highlight && (
               <p className="mt-3 text-[0.86rem] font-medium text-[var(--ink)]">
                 {project.highlight}
@@ -49,17 +67,31 @@ export default function ProjectsPage() {
             <p className="faint mt-2 text-[0.78rem]">
               {project.tags.join(" · ")}
             </p>
-            {project.url && project.linkLabel && (
-              <a
-                href={project.url}
-                target={project.download ? undefined : "_blank"}
-                rel={project.download ? undefined : "noopener noreferrer"}
-                download={project.download ? project.url?.split("/").pop() : undefined}
-                className="inline-block mt-3 text-[0.82rem] qlink"
-              >
-                {project.linkLabel}
-              </a>
-            )}
+            {(project.url && project.linkLabel) || project.repo ? (
+              <p className="mt-3 text-[0.82rem] flex flex-wrap gap-x-4 gap-y-1">
+                {project.url && project.linkLabel && (
+                  <a
+                    href={project.url}
+                    target={project.download ? undefined : "_blank"}
+                    rel={project.download ? undefined : "noopener noreferrer"}
+                    download={project.download ? project.url?.split("/").pop() : undefined}
+                    className="qlink"
+                  >
+                    {project.linkLabel}
+                  </a>
+                )}
+                {project.repo && (
+                  <a
+                    href={project.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="qlink"
+                  >
+                    View on GitHub
+                  </a>
+                )}
+              </p>
+            ) : null}
           </article>
         ))}
       </div>

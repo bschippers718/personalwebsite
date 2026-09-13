@@ -10,10 +10,32 @@ export interface Project {
   status: ProjectStatus;
   statusLabel?: string;
   highlight?: string;
+  /** Optional GitHub repository, shown as a secondary link. */
+  repo?: string;
+  /** Optional screenshot, served from /public. */
+  image?: { src: string; alt: string; width: number; height: number };
   tags: string[];
 }
 
 export const projects: Project[] = [
+  {
+    name: "NYC in Motion",
+    description:
+      "A realtime 3D view of New York as a stack of moving layers: live subway trains at their true depth below the street, MTA buses and NYC Ferry boats on their routes, a replay of taxi and ride-hail traffic along the real street grid, and every aircraft over the region, all drawn over the city's buildings. A slider pulls the strata apart so you can read the city as a section drawing, and you can ride in the cab of a train as it crosses the Manhattan Bridge.",
+    url: "https://nyc.benschippers.com",
+    linkLabel: "Open the live map",
+    repo: "https://github.com/bschippers718/NYCInMotion-",
+    image: {
+      src: "/projects/nyc-in-motion.jpg",
+      alt: "NYC in Motion: Lower Manhattan rendered in 3D with subway lines running beneath the buildings.",
+      width: 1728,
+      height: 1080,
+    },
+    year: "2026",
+    status: "wip",
+    statusLabel: "Building now",
+    tags: ["MapLibre", "deck.gl", "Python", "MTA GTFS-RT", "Open Data"],
+  },
   {
     name: "TezLab",
     description:

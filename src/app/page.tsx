@@ -1,7 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import GuideRow from "@/components/GuideRow";
 import { articles } from "@/content/writing";
 import { personalRecords } from "@/content/athletics";
+import { projects } from "@/content/projects";
+
+const nowBuilding = projects.find((p) => p.name === "NYC in Motion");
 
 export default function HomePage() {
   return (
@@ -27,6 +31,71 @@ export default function HomePage() {
         </p>
       </section>
 
+      {/* Building now */}
+      {nowBuilding?.url && nowBuilding.image && (
+        <section className="fade mt-16">
+          <p className="text-[0.72rem] font-medium tracking-wide uppercase text-[var(--accent)]">
+            Building now
+          </p>
+          <h2 className="mt-2 text-[1.2rem] font-medium tracking-tight text-[var(--ink)]">
+            <a
+              href={nowBuilding.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="qlink"
+            >
+              {nowBuilding.name}
+            </a>
+          </h2>
+          <p className="dim mt-1.5 text-[0.95rem] leading-relaxed">
+            A live 3D map of New York as a stack of moving layers: subway trains
+            at their real depth under the street, buses, ferries, taxis, and
+            every aircraft overhead, drawn over the city&apos;s buildings. Pull the
+            layers apart, or ride in the cab of a train across the Manhattan
+            Bridge.
+          </p>
+          <a
+            href={nowBuilding.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block mt-5 overflow-hidden rounded-sm border border-[var(--line)]"
+          >
+            <Image
+              src={nowBuilding.image.src}
+              alt={nowBuilding.image.alt}
+              width={nowBuilding.image.width}
+              height={nowBuilding.image.height}
+              sizes="(max-width: 640px) 100vw, 38rem"
+              priority
+              className="block w-full h-auto"
+            />
+          </a>
+          <p className="mt-3 text-[0.82rem] flex flex-wrap gap-x-4 gap-y-1">
+            <a
+              href={nowBuilding.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="qlink"
+            >
+              Open the live map
+            </a>
+            {nowBuilding.repo && (
+              <a
+                href={nowBuilding.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="qlink"
+              >
+                View on GitHub
+              </a>
+            )}
+            <Link href="/projects" className="qlink">
+              All projects
+            </Link>
+          </p>
+        </section>
+      )}
+
       {/* Index */}
       <section className="fade mt-20">
         <GuideRow
@@ -46,7 +115,7 @@ export default function HomePage() {
         />
         <GuideRow
           title="Projects"
-          description="EV software, focused social tools, shared AI, ML research, and computer vision."
+          description="A live 3D map of New York, EV software, focused social tools, shared AI, ML research, and computer vision."
           href="/projects"
         />
         <GuideRow
