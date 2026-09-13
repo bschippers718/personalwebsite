@@ -39,12 +39,14 @@ export const projects: Project[] = [
   {
     name: "TezLab",
     description:
-      "EV companion platform with energy insights, battery health tracking, and utility partnerships.",
-    url: "https://www.tezlabapp.com/app",
-    linkLabel: "Visit TezLab",
+      "The #1-rated Tesla and Rivian app in the world. From saving money and getting the most from your battery to road-tripping and daily commuting, TezLab gives you your car's health at a glance, battery health compared against the fleet, detailed logs of every drive and charge, phantom drain detection, custom automations, real-time notifications, and remote control of your car.",
+    url: "https://apps.apple.com/us/app/tezlab-for-tesla-rivian/id1239581716",
+    linkLabel: "View on the App Store",
     year: "2018 →",
     status: "active",
-    tags: ["React Native", "EV", "Energy"],
+    highlight:
+      "#1 Rated App for Tesla/Rivian on the App Store. 4.8 stars across 5,000+ ratings.",
+    tags: ["iOS", "Android", "Tesla", "Rivian", "EV"],
   },
   {
     name: "Battery Health — For Tesla",
