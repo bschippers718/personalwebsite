@@ -24,6 +24,11 @@ export default function HomePage() {
           make software, run long distances, and write about how tech reshapes
           markets.
         </p>
+        <p className="mt-5 text-[1.05rem] leading-relaxed dim max-w-[33rem]">
+          I also love working with NYC Open Data. I&apos;m building a suite of
+          projects that explores how New York moves and makes what&apos;s happening
+          around your block easier to see and understand.
+        </p>
         <p className="mt-8 text-[1rem]">
           <Link href="/contact" className="qlink">
             Get in touch
