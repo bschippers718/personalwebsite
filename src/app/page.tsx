@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import GuideRow from "@/components/GuideRow";
 import { personalRecords } from "@/content/athletics";
@@ -30,6 +31,18 @@ export default function HomePage() {
           </Link>
         </p>
       </section>
+
+      <figure className="fade mt-10 overflow-hidden rounded-sm border border-[var(--line)]">
+        <Image
+          src="/projects/nyc-in-motion.jpg"
+          alt="NYC in Motion showing Lower Manhattan in 3D with subway lines beneath the buildings"
+          width={1728}
+          height={1080}
+          sizes="(max-width: 640px) 100vw, 38rem"
+          priority
+          className="block h-auto w-full"
+        />
+      </figure>
 
       {/* Index */}
       <section className="fade mt-20">
