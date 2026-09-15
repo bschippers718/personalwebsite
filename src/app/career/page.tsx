@@ -4,8 +4,7 @@ import { career } from "@/content/career";
 
 export const metadata: Metadata = {
   title: "Career",
-  description:
-    "Building efficient products and the systems that help them scale.",
+  description: "Companies and products Ben Schippers has built, operated, and sold.",
 };
 
 export default function CareerPage() {
@@ -13,7 +12,7 @@ export default function CareerPage() {
     <div className="measure pt-24 fade">
       <ChannelHeader
         title="Career"
-        note="I love working on projects that require a consistent focus on streamlining systems and thinking clearly about how every part connects. I love building beautifully efficient products — then creating the teams, operations, and commercial systems that help them scale."
+        note="I build products and the operating systems behind them: teams, delivery, partnerships, and revenue."
       />
 
       <div>

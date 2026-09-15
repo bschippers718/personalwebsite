@@ -26,13 +26,13 @@ export const career: CareerEntry[] = [
     title: "CEO & Co-Founder",
     org: "TezLab",
     detail:
-      "The leading companion app for Tesla and Rivian drivers, built at the intersection of consumer software, energy, and mobility.",
+      "TezLab turns Tesla and Rivian drive, charge, battery, and efficiency data into reports, alerts, and vehicle controls.",
     highlights: [
       {
-        text: "Built a cash-flow-positive platform spanning energy insights, battery health, charging, and vehicle analytics.",
+        text: "Grew TezLab into a cash-flow-positive business.",
       },
       {
-        text: "Structured managed-charging partnerships with National Grid and other major US utilities.",
+        text: "Built managed-charging programs with National Grid.",
       },
     ],
     status: "current",
@@ -43,70 +43,61 @@ export const career: CareerEntry[] = [
     title: "Co-Founder & Co-CEO",
     org: "HappyFunCorp",
     detail:
-      "Co-founded and led a bootstrapped product-engineering studio for fourteen years, growing it from two founders into a profitable, multimillion-dollar firm with no outside capital. Named to the Inc. 5000 and nominated for an Edison Award, the studio designed and shipped software used by hundreds of millions of people for some of the most recognized brands in the world.",
+      "I co-founded HappyFunCorp in 2009. We bootstrapped it to $12M in 2022 revenue; Tiny acquired it for $30M in 2023.",
     highlights: [
       {
         text: "Acquired by Tiny for $30M in cash and stock in July 2023.",
         href: "https://techcrunch.com/2023/07/03/tiny-acquires-happyfuncorp-the-prolific-firm-thats-built-apps-for-twitter-amazon-and-more-for-30m/",
       },
       {
-        text: "Built Twitter/X for Apple TV in a 12-week sprint for NFL Thursday Night Football; named Apple TV App of the Year in 2016.",
+        text: "HFC shipped Twitter's Apple TV app in 12 weeks; Apple named it 2016 App of the Year.",
         href: "https://www.happyfuncorp.com/work/twitter-x-tv-app-development",
       },
       {
-        text: "Helped turn Nike SNKRS into a $70M revenue channel in its first year.",
+        text: "HFC worked on Nike SNKRS, which generated nearly $70M in its first year.",
         href: "https://www.happyfuncorp.com/work/nike-mobile-development",
       },
       {
-        text: "Designed and launched Disney Movies Anywhere on tvOS and Roku, serving nearly 6M users and 150M purchased films.",
+        text: "HFC built the Roku app and parts of the tvOS app for Disney Movies Anywhere; the service reached nearly 6M users with 150M films in their libraries.",
         href: "https://www.happyfuncorp.com/work/disney-tv-app-development",
-      },
-      {
-        text: "Shipped products for Apple, Disney, Amazon, Twitter, Nike, Samsung, American Express, Audible, and others.",
       },
     ],
     status: "acquired",
-    statusLabel: "$30M exit",
+    statusLabel: "Acquired by Tiny",
   },
   {
-    period: "2006 → 2009",
+    period: "2009 → 2010",
     title: "Co-Founder",
     org: "Workstreamer",
     detail:
-      "Founded Workstreamer, an early real-time business-listening platform that tracked and ranked what was happening at any company, years before social listening became an established category. Sold to Workthink in 2009.",
+      "Workstreamer collected live signals from news, social networks, job listings, SEC filings, and CRM systems, then ranked what mattered for a company. This was before business listening became an established software category.",
     highlights: [
       {
-        text: "Acquired by Workthink in 2009.",
-      },
-      {
-        text: "Backed by Austin Ventures at seed.",
+        text: "Austin Ventures backed the company at seed.",
         href: "https://techcrunch.com/2010/04/23/workstreamer-is-a-realtime-listening-and-tracking-platform-for-businesses/",
       },
       {
         text: "Raised a $3.5M Series A led by Austin Ventures in July 2010.",
         href: "https://www.prnewswire.com/news-releases/workstreamer-raises-35-million-series-a-round-99306464.html",
       },
-      {
-        text: "Aggregated and ranked real-time signals from news, social networks, jobs data, SEC filings, and CRM systems.",
-      },
     ],
-    status: "acquired",
-    statusLabel: "Acquired",
+    status: "venture",
+    statusLabel: "Venture-backed",
   },
   {
     period: "— → NOW",
     title: "Co-Chair",
     org: "Brooklyn Roasting Company",
-    detail: "Specialty coffee roaster & Brooklyn cafés",
+    detail: "I co-chair Brooklyn Roasting Company, a specialty coffee roaster with Brooklyn cafés.",
     status: "current",
     statusLabel: "Current",
   },
   {
-    period: "2000 → 2004 · 2015",
+    period: "2000 → 2004",
     title: "B.A. American Cultural Studies",
     org: "Bates College",
     detail:
-      "#1 squash player · Team captain · Top 32 nationally",
+      "Four-year No. 1 squash player · two-year team captain · top 32 nationally",
     highlights: [
       {
         text: "Scholar-Athlete Society inductee and keynote speaker in 2015.",

@@ -12,7 +12,7 @@ export interface RaceResult {
 }
 
 export const personalRecords: PersonalRecord[] = [
-  { event: "Mile", mark: "4:19", detail: "4:19/mi pace", featured: true },
+  { event: "Mile", mark: "4:19", featured: true },
   { event: "10K", mark: "32:44", detail: "5:16/mi pace" },
   { event: "Half Marathon", mark: "1:12:11", detail: "5:30/mi pace" },
 ];
@@ -20,8 +20,8 @@ export const personalRecords: PersonalRecord[] = [
 export const highlights: RaceResult[] = [
   {
     name: "Grand Canyon Rim to Rim to Rim",
-    detail: "~42 miles through the Grand Canyon · Under 10 hours",
-    result: "Completed",
+    detail: "South Rim → North Rim → South Rim",
+    result: "Under 10 hours",
   },
   {
     name: "NYCRUNS Father's Day Half Marathon",
@@ -30,7 +30,7 @@ export const highlights: RaceResult[] = [
   },
   {
     name: "Bates College Squash",
-    detail: "#1 player on the team · Team Captain · Top 32 nationally",
+    detail: "No. 1 player · team captain · top 32 nationally",
     result: "Scholar-Athlete",
   },
 ];

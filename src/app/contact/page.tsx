@@ -4,7 +4,7 @@ import { contactChannels } from "@/content/contact";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "The best ways to reach Ben Schippers.",
+  description: "Email Ben Schippers or find him on X and GitHub.",
 };
 
 export default function ContactPage() {
@@ -12,7 +12,7 @@ export default function ContactPage() {
     <div className="measure pt-24 fade">
       <ChannelHeader
         title="Contact"
-        note="The best way to reach me. Email gets the fastest response."
+        note="Email is the fastest way to reach me."
       />
 
       <div>

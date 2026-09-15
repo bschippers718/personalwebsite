@@ -4,7 +4,7 @@ import { personalRecords, highlights } from "@/content/athletics";
 
 export const metadata: Metadata = {
   title: "Athletics",
-  description: "Personal records, race results, and long miles.",
+  description: "Running and squash records and results.",
 };
 
 export default function AthleticsPage() {
@@ -12,7 +12,7 @@ export default function AthleticsPage() {
     <div className="measure pt-24 fade">
       <ChannelHeader
         title="Athletics"
-        note="Running, squash, and pushing limits. Personal records and results."
+        note="Running personal records, race results, and squash."
       />
 
       {/* PRs */}

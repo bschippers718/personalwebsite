@@ -20,13 +20,14 @@ export const metadata: Metadata = {
     template: "%s — Ben Schippers",
   },
   description:
-    "Ben Schippers — founder, product builder, investor, and endurance athlete.",
+    "Ben Schippers builds software for EVs, mobility, and public data. Co-founder of TezLab and HappyFunCorp.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
   ),
   openGraph: {
     title: "Ben Schippers",
-    description: "Builder, athlete, investor.",
+    description:
+      "Ben Schippers builds software for EVs, mobility, and public data. Co-founder of TezLab and HappyFunCorp.",
     type: "website",
   },
 };

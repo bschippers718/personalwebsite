@@ -94,7 +94,7 @@ async function batchFetch(calls: Array<{ tool: string; args?: Record<string, unk
   });
 
   if (res.status === 401) return { auth: false, results: [] };
-  if (!res.ok) return { auth: true, results: [], error: `Server error: ${res.status}` };
+  if (!res.ok) return { auth: true, results: [], error: "Couldn't load TezLab data." };
 
   const { results } = (await res.json()) as {
     results: Array<{ tool: string; result?: unknown; error?: string }>;
@@ -162,7 +162,7 @@ export function useTezLab() {
 
       const successes = results.filter((r) => r.result && !r.error);
       if (successes.length === 0) {
-        setError("MCP server unavailable — retrying…");
+        setError("TezLab data is unavailable. Retrying…");
         setLoading(false);
         return false;
       }
@@ -186,7 +186,7 @@ export function useTezLab() {
       return true;
     } catch (err) {
       console.error("Error fetching TezLab data:", err);
-      setError("Network error — retrying…");
+      setError("Couldn't load TezLab data. Retrying…");
       setLoading(false);
       return false;
     }
@@ -215,7 +215,7 @@ export function useTezLab() {
       if (cancelled) return;
 
       if (!vList || !vList.length) {
-        setError("MCP server unavailable — retrying…");
+        setError("TezLab data is unavailable. Retrying…");
         scheduleRetry();
         return;
       }
@@ -233,7 +233,7 @@ export function useTezLab() {
     function scheduleRetry() {
       if (cancelled) return;
       if (retryCount.current >= 5) {
-        setError("MCP server unavailable. Click Connect to retry.");
+        setError("TezLab data is unavailable. Refresh to try again.");
         setLoading(false);
         return;
       }

@@ -30,7 +30,7 @@ export async function registerClient(redirectUri: string): Promise<{ client_id: 
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       redirect_uris: [redirectUri],
-      client_name: "Battery Tamagotchi",
+      client_name: "EV Battery Dashboard",
       token_endpoint_auth_method: "none",
       grant_types: ["authorization_code", "refresh_token"],
       response_types: ["code"],

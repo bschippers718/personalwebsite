@@ -5,7 +5,7 @@ import { projects, statusMeta } from "@/content/projects";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Things built, shipped, or currently in progress.",
+  description: "Selected software projects in mobility, energy, public data, and computer vision.",
 };
 
 export default function ProjectsPage() {
@@ -13,7 +13,7 @@ export default function ProjectsPage() {
     <div className="measure pt-24 fade">
       <ChannelHeader
         title="Projects"
-        note="Things I've built, shipped, or am currently working on."
+        note="Selected software projects in mobility, energy, public data, and computer vision."
       />
 
       <div>

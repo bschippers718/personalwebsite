@@ -30,34 +30,26 @@ const EFFICIENCY = {
   streakWins: 5,
 };
 
-const GHOST_RACE = {
-  routeName: "Home → Office",
-  you: { efficiency: 87, kwhPerMile: 0.26 },
-  ghost: { efficiency: 82, kwhPerMile: 0.29, label: "Your Avg" },
-  delta: "+5%",
-  result: "won" as const,
-  personalBest: true,
-};
-
 const RECENT_DRIVES = [
-  { date: "Mar 21", distance: "34.7 mi", efficiency: 84, result: "won" as const, route: "Home → Midtown" },
-  { date: "Mar 20", distance: "12.3 mi", efficiency: 91, result: "won" as const, route: "Office → Gym" },
-  { date: "Mar 19", distance: "28.1 mi", efficiency: 76, result: "lost" as const, route: "Brooklyn → JFK" },
-  { date: "Mar 18", distance: "8.9 mi", efficiency: 89, result: "won" as const, route: "Home → Office" },
-  { date: "Mar 17", distance: "41.2 mi", efficiency: 72, result: "lost" as const, route: "Road trip seg" },
+  { date: "Mar 21", distance: "34.7 mi", efficiency: 84, route: "Home → Midtown" },
+  { date: "Mar 20", distance: "12.3 mi", efficiency: 91, route: "Office → Gym" },
+  { date: "Mar 19", distance: "28.1 mi", efficiency: 76, route: "Brooklyn → JFK" },
+  { date: "Mar 18", distance: "8.9 mi", efficiency: 89, route: "Home → Office" },
+  { date: "Mar 17", distance: "41.2 mi", efficiency: 72, route: "Road trip segment" },
 ];
 
 const RECENT_CHARGES = [
-  { date: "Mar 21", type: "L2 Home", from: 42, to: 80, coreImpact: +3, good: true },
-  { date: "Mar 20", type: "L2 Home", from: 35, to: 78, coreImpact: +3, good: true },
-  { date: "Mar 18", type: "Supercharger", from: 12, to: 95, coreImpact: -2, good: false },
-  { date: "Mar 17", type: "L2 Home", from: 28, to: 80, coreImpact: +3, good: true },
-  { date: "Mar 15", type: "L2 Work", from: 55, to: 80, coreImpact: +2, good: true },
+  { date: "Mar 21", type: "L2 Home", from: 42, to: 80 },
+  { date: "Mar 20", type: "L2 Home", from: 35, to: 78 },
+  { date: "Mar 18", type: "Supercharger", from: 12, to: 95 },
+  { date: "Mar 17", type: "L2 Home", from: 28, to: 80 },
+  { date: "Mar 15", type: "L2 Work", from: 55, to: 80 },
 ];
 
 const LIVE_DRIVE = {
   active: true,
   elapsed: "18:32",
+  route: "Home → Office",
   distanceMi: 14.2,
   efficiency: 89,
   avgSpeedMph: 34,
@@ -258,95 +250,7 @@ function Creature({ evolution, compact = false }: { evolution: Evolution; compac
   );
 }
 
-// ─── Ghost Race Bar ──────────────────────────────────────────────────────────
-
-function GhostRace({ data, compact = false }: { data: typeof GHOST_RACE; compact?: boolean }) {
-  const maxEff = Math.max(data.you.efficiency, data.ghost.efficiency, 100);
-  const youWidth = (data.you.efficiency / maxEff) * 100;
-  const ghostWidth = (data.ghost.efficiency / maxEff) * 100;
-
-  return (
-    <div>
-      {!compact && (
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          marginBottom: "1rem",
-        }}>
-          <span style={{ fontSize: "11px", color: T.textDim, letterSpacing: "0.1em", textTransform: "uppercase" as const }}>
-            {data.routeName}
-          </span>
-          {data.personalBest && (
-            <span style={{ fontSize: "10px", color: T.orange, fontWeight: 600, letterSpacing: "0.08em" }}>
-              PERSONAL BEST
-            </span>
-          )}
-        </div>
-      )}
-
-      <div style={{ display: "flex", flexDirection: "column", gap: compact ? "0.5rem" : "0.75rem" }}>
-        <div>
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "0.3rem",
-            fontSize: compact ? "10px" : "11px",
-          }}>
-            <span style={{ color: T.green, fontWeight: 600, letterSpacing: "0.1em" }}>YOU</span>
-            <span style={{ color: T.text, fontFamily: "var(--font-display)", fontWeight: 700 }}>
-              {data.you.efficiency}%
-            </span>
-          </div>
-          <div style={{ height: compact ? 6 : 8, background: T.cardBorder, borderRadius: 1, overflow: "hidden" }}>
-            <div style={{
-              height: "100%",
-              width: `${youWidth}%`,
-              background: T.green,
-              borderRadius: 1,
-              boxShadow: `0 0 8px ${T.green}40`,
-              transition: "width 1s ease-out",
-            }} />
-          </div>
-        </div>
-
-        <div>
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "0.3rem",
-            fontSize: compact ? "10px" : "11px",
-          }}>
-            <span style={{ color: T.textGhost, fontWeight: 500, letterSpacing: "0.1em" }}>
-              {compact ? "GHOST" : data.ghost.label.toUpperCase()}
-            </span>
-            <span style={{ color: T.textDim }}>{data.ghost.efficiency}%</span>
-          </div>
-          <div style={{ height: compact ? 6 : 8, background: T.cardBorder, borderRadius: 1, overflow: "hidden" }}>
-            <div style={{
-              height: "100%",
-              width: `${ghostWidth}%`,
-              background: T.textGhost,
-              borderRadius: 1,
-              transition: "width 1s ease-out",
-            }} />
-          </div>
-        </div>
-      </div>
-
-      <div style={{
-        marginTop: compact ? "0.5rem" : "0.75rem",
-        fontSize: compact ? "11px" : "12px",
-        color: data.result === "won" ? T.green : T.red,
-        fontWeight: 600,
-      }}>
-        {data.delta} {data.result === "won" ? "better than ghost" : "behind ghost"}
-      </div>
-    </div>
-  );
-}
-
-// ─── HUD Mode (Tesla In-Car View) ───────────────────────────────────────────
+// ─── Drive View ──────────────────────────────────────────────────────────────
 
 interface LiveDriveData {
   active: boolean;
@@ -360,12 +264,11 @@ interface LiveDriveData {
   batteryPct: number;
 }
 
-function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive }: {
+function HudView({ evolution, onExit, battery, efficiency, liveDrive }: {
   evolution: Evolution;
   onExit: () => void;
   battery: typeof BATTERY;
   efficiency: typeof EFFICIENCY;
-  ghostRace: typeof GHOST_RACE;
   liveDrive: LiveDriveData;
 }) {
   const drive = liveDrive;
@@ -407,19 +310,14 @@ function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive 
             boxShadow: `0 0 6px ${T.green}60`,
           }} />
           <span style={{ fontSize: "11px", letterSpacing: "0.2em", color: T.textDim }}>
-            BATTERY TAMAGOTCHI
+            EV BATTERY DASHBOARD
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
           {drive.active && (
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <div style={{
-                width: 6, height: 6, borderRadius: "50%",
-                background: T.green,
-                animation: "core-pulse 1.5s ease-in-out infinite",
-              }} />
               <span style={{ fontSize: "10px", color: T.green, letterSpacing: "0.15em", fontWeight: 600 }}>
-                LIVE · {drive.elapsed} · {drive.route}
+                LATEST DRIVE · {drive.elapsed} · {drive.route}
               </span>
             </div>
           )}
@@ -436,7 +334,7 @@ function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive 
               fontFamily: "var(--font-mono)",
             }}
           >
-            EXIT HUD
+            CLOSE DRIVE VIEW
           </button>
         </div>
       </div>
@@ -444,7 +342,7 @@ function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive 
       {/* HUD Body */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflowY: "auto" }}>
 
-        {/* Top: Creature + Tamagotchi stats */}
+        {/* Battery and efficiency summary */}
         <div style={{
           display: "flex",
           alignItems: "center",
@@ -456,27 +354,13 @@ function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive 
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <Creature evolution={evolution} compact />
-            <div>
-              <div style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.1rem",
-                fontWeight: 800,
-                color: T.green,
-                letterSpacing: "0.1em",
-              }}>
-                {evolution.stage.toUpperCase()}
-              </div>
-              <div style={{ fontSize: "10px", color: T.textGhost, marginTop: "0.2rem" }}>
-                LVL {evolution.level}/5
-              </div>
-            </div>
           </div>
 
           <div style={{ display: "flex", gap: "1.5rem" }}>
             {[
-              { label: "CORE", value: `${battery.healthPct}%` },
-              { label: "PULSE", value: `${efficiency.averagePct}%` },
-              { label: "STREAK", value: `${efficiency.streakWins}W` },
+              { label: "BATTERY HEALTH", value: `${battery.healthPct}%` },
+              { label: "AVG EFFICIENCY", value: `${efficiency.averagePct}%` },
+              { label: "30-DAY EFF.", value: `${efficiency.last30Days}%` },
             ].map((s) => (
               <div key={s.label} style={{ textAlign: "center" }}>
                 <div style={{ fontSize: "9px", letterSpacing: "0.18em", color: T.textDim, marginBottom: "0.25rem" }}>
@@ -495,7 +379,7 @@ function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive 
           </div>
         </div>
 
-        {/* Live Drive Stats */}
+        {/* Latest Drive Stats */}
         {drive.active && (
           <div style={{ padding: "1.25rem 2rem", flex: 1 }}>
             <div style={{
@@ -505,7 +389,7 @@ function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive 
               marginBottom: "1rem",
               fontWeight: 500,
             }}>
-              CURRENT DRIVE
+              LATEST DRIVE
             </div>
 
             <div className="tama-hud-stats-grid" style={{
@@ -551,27 +435,6 @@ function HudView({ evolution, onExit, battery, efficiency, ghostRace, liveDrive 
               ))}
             </div>
 
-            {/* Mini ghost comparison from last drive */}
-            <div style={{
-              marginTop: "1rem",
-              padding: "0.85rem 1rem",
-              border: `1px solid ${T.cardBorder}`,
-              background: "#050510",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}>
-              <span style={{ fontSize: "10px", color: T.textDim, letterSpacing: "0.1em" }}>
-                LAST GHOST · {ghostRace.routeName}
-              </span>
-              <span style={{
-                fontSize: "10px",
-                fontWeight: 600,
-                color: ghostRace.result === "won" ? T.green : T.red,
-              }}>
-                {ghostRace.result === "won" ? "WON" : "LOST"} {ghostRace.delta}
-              </span>
-            </div>
           </div>
         )}
       </div>
@@ -640,7 +503,6 @@ function mapDrives(raw: unknown): typeof RECENT_DRIVES {
       date: formatDate(dr.date ?? dr.started_at ?? dr.start_time),
       distance: `${dist.toFixed(1)} mi`,
       efficiency: eff,
-      result: eff >= 82 ? "won" as const : "lost" as const,
       route: buildRoute(dr),
     };
   });
@@ -654,16 +516,11 @@ function mapCharges(raw: unknown): typeof RECENT_CHARGES {
     const ch = c as Record<string, unknown>;
     const from = Math.round((ch.start_soc ?? ch.start_pct ?? ch.from ?? 50) as number);
     const to = Math.round((ch.end_soc ?? ch.end_pct ?? ch.to ?? 80) as number);
-    const isSupercharger = String(ch.charge_type ?? ch.type ?? "").toLowerCase().includes("super") ||
-      String(ch.charge_type ?? ch.type ?? "").toLowerCase().includes("dc");
-    const good = !isSupercharger && to <= 90;
     return {
       date: formatDate(ch.date ?? ch.started_at ?? ch.start_time),
       type: (ch.charge_type ?? ch.type ?? ch.location ?? "L2") as string,
       from,
       to,
-      coreImpact: good ? +3 : -2,
-      good,
     };
   });
 }
@@ -765,7 +622,7 @@ export default function BatteryTamagotchiPage() {
   const efficiency = isLive ? mapEfficiency(liveData.efficiency) : EFFICIENCY;
   const drives = isLive ? mapDrives(liveData.drives) : RECENT_DRIVES;
   const charges = isLive ? mapCharges(liveData.charges) : RECENT_CHARGES;
-  const liveDrive = isLive ? mapLiveDrive(liveData.drives, liveData.vehicleStatus) : { ...LIVE_DRIVE, route: GHOST_RACE.routeName };
+  const liveDrive = isLive ? mapLiveDrive(liveData.drives, liveData.vehicleStatus) : LIVE_DRIVE;
 
   const core = battery.healthPct;
   const pulse = efficiency.averagePct;
@@ -781,7 +638,7 @@ export default function BatteryTamagotchiPage() {
     }}>
       {hudMode && (
         <HudPortal>
-          <HudView evolution={evolution} onExit={() => setHudMode(false)} battery={battery} efficiency={efficiency} ghostRace={GHOST_RACE} liveDrive={liveDrive} />
+          <HudView evolution={evolution} onExit={() => setHudMode(false)} battery={battery} efficiency={efficiency} liveDrive={liveDrive} />
         </HudPortal>
       )}
 
@@ -812,7 +669,7 @@ export default function BatteryTamagotchiPage() {
               color: T.textDim,
               fontWeight: 500,
             }}>
-              BATTERY TAMAGOTCHI
+              EV BATTERY DASHBOARD
             </span>
             <span style={{
               fontSize: "9px",
@@ -829,7 +686,7 @@ export default function BatteryTamagotchiPage() {
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             {isLive && (
               <span style={{ fontSize: "9px", color: T.green, letterSpacing: "0.12em", fontWeight: 600 }}>
-                ● LIVE
+                ● TEZLAB DATA
               </span>
             )}
             {mcpVehicles.length > 1 && (
@@ -921,7 +778,7 @@ export default function BatteryTamagotchiPage() {
                 e.currentTarget.style.color = T.textDim;
               }}
             >
-              LAUNCH HUD
+              OPEN DRIVE VIEW
             </button>
           </div>
         </div>
@@ -999,7 +856,7 @@ export default function BatteryTamagotchiPage() {
           </div>
         )}
 
-        {/* ── Creature + Evolution ── */}
+        {/* ── Battery visualization ── */}
         <div style={{
           display: "flex",
           flexDirection: "column",
@@ -1008,46 +865,6 @@ export default function BatteryTamagotchiPage() {
           borderBottom: `1px solid ${T.divider}`,
         }}>
           <Creature evolution={evolution} />
-
-          <div style={{ textAlign: "center", marginTop: "1rem" }}>
-            <div style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "1.5rem",
-              fontWeight: 800,
-              color: T.green,
-              letterSpacing: "0.15em",
-            }}>
-              {evolution.stage.toUpperCase()}
-            </div>
-            <div style={{
-              fontSize: "11px",
-              color: T.textGhost,
-              marginTop: "0.35rem",
-              letterSpacing: "0.05em",
-            }}>
-              Level {evolution.level} of 5
-              {evolution.nextStage && ` · ${Math.round(evolution.progressToNext)}% to ${evolution.nextStage}`}
-            </div>
-          </div>
-
-          {evolution.nextStage && (
-            <div style={{
-              marginTop: "1rem",
-              width: "200px",
-              height: 3,
-              background: T.cardBorder,
-              borderRadius: 2,
-              overflow: "hidden",
-            }}>
-              <div style={{
-                height: "100%",
-                width: `${evolution.progressToNext}%`,
-                background: T.green,
-                borderRadius: 2,
-                transition: "width 1s ease-out",
-              }} />
-            </div>
-          )}
         </div>
 
         {/* ── Vehicle Info ── */}
@@ -1074,7 +891,7 @@ export default function BatteryTamagotchiPage() {
           ))}
         </div>
 
-        {/* ── Core & Pulse Gauges ── */}
+        {/* ── Battery and efficiency gauges ── */}
         <div className="tama-stats-grid" style={{
           background: T.cardBorder,
           border: `1px solid ${T.cardBorder}`,
@@ -1083,8 +900,8 @@ export default function BatteryTamagotchiPage() {
           <div style={{ background: T.card, padding: "2.5rem 2rem", display: "flex", justifyContent: "center" }}>
             <RingGauge
               value={core}
-              label="Core"
-              sublabel={`Battery Health · ${battery.trend}`}
+              label="Battery health"
+              sublabel={`Estimated range · ${battery.maxRangeMiles} mi`}
               color={T.green}
               size={170}
             />
@@ -1092,8 +909,8 @@ export default function BatteryTamagotchiPage() {
           <div style={{ background: T.card, padding: "2.5rem 2rem", display: "flex", justifyContent: "center" }}>
             <RingGauge
               value={pulse}
-              label="Pulse"
-              sublabel={`Avg Efficiency · ${efficiency.streakWins}-win streak`}
+              label="Average efficiency"
+              sublabel={`30-day average · ${efficiency.last30Days}%`}
               color={T.green}
               size={170}
             />
@@ -1128,7 +945,7 @@ export default function BatteryTamagotchiPage() {
           ))}
         </div>
 
-        {/* ── Live Drive ── */}
+        {/* ── Latest Drive ── */}
         {liveDrive.active && (
           <div style={{ marginTop: "2rem" }}>
             <div style={{
@@ -1142,12 +959,7 @@ export default function BatteryTamagotchiPage() {
               alignItems: "center",
               gap: "0.6rem",
             }}>
-              <div style={{
-                width: 6, height: 6, borderRadius: "50%",
-                background: T.green,
-                animation: "core-pulse 1.5s ease-in-out infinite",
-              }} />
-              {liveDrive.route} · {liveDrive.elapsed}
+              Latest drive · {liveDrive.route} · {liveDrive.elapsed}
             </div>
             <div style={{
               display: "grid",
@@ -1179,38 +991,8 @@ export default function BatteryTamagotchiPage() {
                 </div>
               ))}
             </div>
-            <div style={{
-              marginTop: "0.5rem",
-              fontSize: "10px",
-              color: T.textGhost,
-              textAlign: "center",
-              padding: "0.5rem",
-            }}>
-              Ghost comparison available after drive completes
-            </div>
           </div>
         )}
-
-        {/* ── Last Drive · Ghost Comparison ── */}
-        <div style={{ marginTop: "2rem" }}>
-          <div style={{
-            fontSize: "10px",
-            letterSpacing: "0.2em",
-            color: T.textDim,
-            textTransform: "uppercase" as const,
-            marginBottom: "0.75rem",
-            fontWeight: 500,
-          }}>
-            Last Drive · Ghost Comparison
-          </div>
-          <div style={{
-            border: `1px solid ${T.cardBorder}`,
-            background: T.card,
-            padding: "1.25rem 1.5rem",
-          }}>
-            <GhostRace data={GHOST_RACE} />
-          </div>
-        </div>
 
         {/* ── Two Column: Charges + Drives ── */}
         <div className="tama-activity-grid" style={{
@@ -1245,28 +1027,20 @@ export default function BatteryTamagotchiPage() {
                   alignItems: "center",
                   gap: "0.75rem",
                 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", minWidth: 0 }}>
-                    <span style={{
-                      width: 6, height: 6, borderRadius: "50%", flexShrink: 0,
-                      background: charge.good ? T.green : T.red,
-                      boxShadow: charge.good ? `0 0 4px ${T.green}50` : `0 0 4px ${T.red}50`,
-                    }} />
-                    <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: "12px", color: T.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {charge.type}
-                      </div>
-                      <div style={{ fontSize: "10px", color: T.textDim }}>
-                        {charge.from}% → {charge.to}%
-                      </div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: "12px", color: T.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {charge.type}
+                    </div>
+                    <div style={{ fontSize: "10px", color: T.textDim }}>
+                      {charge.from}% → {charge.to}%
                     </div>
                   </div>
                   <span style={{
                     fontSize: "10px",
-                    fontWeight: 600,
-                    color: charge.coreImpact > 0 ? T.green : T.red,
+                    color: T.textDim,
                     whiteSpace: "nowrap",
                   }}>
-                    {charge.coreImpact > 0 ? "+" : ""}{charge.coreImpact} Core
+                    {charge.date}
                   </span>
                 </div>
               ))}
@@ -1310,16 +1084,10 @@ export default function BatteryTamagotchiPage() {
                     </div>
                   </div>
                   <span style={{
-                    fontSize: "9px",
-                    fontWeight: 600,
-                    letterSpacing: "0.1em",
-                    padding: "0.2rem 0.5rem",
-                    border: "1px solid",
-                    borderColor: drive.result === "won" ? `${T.green}40` : `${T.red}30`,
-                    color: drive.result === "won" ? T.green : T.red,
-                    background: drive.result === "won" ? `${T.green}08` : `${T.red}08`,
+                    fontSize: "10px",
+                    color: T.textDim,
                   }}>
-                    {drive.result === "won" ? "WON" : "LOST"}
+                    {drive.date}
                   </span>
                 </div>
               ))}

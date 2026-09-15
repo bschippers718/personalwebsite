@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import ChannelHeader from "@/components/ChannelHeader";
-import { articles, publications } from "@/content/writing";
+import { articles } from "@/content/writing";
 
 export const metadata: Metadata = {
   title: "Writing",
   description:
-    "Essays on technology and markets — TechCrunch, FastCompany, Forbes, Inc.",
+    "Essays on products, software, data, and technology markets.",
 };
 
 export default function WritingPage() {
@@ -13,9 +13,7 @@ export default function WritingPage() {
     <div className="measure pt-24 fade">
       <ChannelHeader
         title="Writing"
-        note={`Essays on how technology reshapes markets. Published in ${publications.join(
-          ", "
-        )}.`}
+        note="Six essays on software markets, APIs, distribution, and product strategy."
       />
 
       <div>

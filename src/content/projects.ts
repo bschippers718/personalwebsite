@@ -21,7 +21,7 @@ export const projects: Project[] = [
   {
     name: "NYC in Motion",
     description:
-      "A realtime 3D view of New York as a stack of moving layers: live subway trains at their true depth below the street, MTA buses and NYC Ferry boats on their routes, a replay of taxi and ride-hail traffic along the real street grid, and every aircraft over the region, all drawn over the city's buildings. A slider pulls the strata apart so you can read the city as a section drawing, and you can ride in the cab of a train as it crosses the Manhattan Bridge.",
+      "A 3D map combining live subway, bus, ferry, and aircraft feeds with historical taxi data. Separate the layers or follow a train across the Manhattan Bridge.",
     url: "https://nyc.benschippers.com",
     linkLabel: "Open the live map",
     repo: "https://github.com/bschippers718/NYCInMotion-",
@@ -33,36 +33,34 @@ export const projects: Project[] = [
     },
     year: "2026",
     status: "wip",
-    statusLabel: "Building now",
     tags: ["MapLibre", "deck.gl", "Python", "MTA GTFS-RT", "Open Data"],
   },
   {
     name: "TezLab",
     description:
-      "The #1-rated Tesla and Rivian app in the world. From saving money and getting the most from your battery to road-tripping and daily commuting, TezLab gives you your car's health at a glance, battery health compared against the fleet, detailed logs of every drive and charge, phantom drain detection, custom automations, real-time notifications, and remote control of your car.",
+      "Tracks drives, charging, battery health, energy use, and vehicle controls for Tesla and Rivian owners.",
     url: "https://apps.apple.com/us/app/tezlab-for-tesla-rivian/id1239581716",
     linkLabel: "View on the App Store",
     year: "2018 →",
     status: "active",
-    highlight:
-      "#1 Rated App for Tesla/Rivian on the App Store. 4.8 stars across 5,000+ ratings.",
+    highlight: "Rated 4.8 stars on the U.S. App Store.",
     tags: ["iOS", "Android", "Tesla", "Rivian", "EV"],
   },
   {
     name: "Battery Health — For Tesla",
     description:
-      "A focused iPhone app for understanding Tesla battery capacity, charge cycles, range trends, and fleet comparisons at a glance.",
+      "An iPhone app showing usable battery capacity, charge cycles, range trends, and comparisons with similar Teslas.",
     url: "https://apps.apple.com/us/app/battery-health-for-tesla/id6764105268",
     linkLabel: "View on the App Store",
     year: "2026",
     status: "active",
-    highlight: "Reached #1 among trending paid apps on the App Store.",
+    highlight: "Reached #1 on the U.S. App Store's trending paid-apps chart in 2026.",
     tags: ["iOS", "Tesla", "Battery Data"],
   },
   {
     name: "Sift",
     description:
-      "A Chrome extension that turns X into a focused, readable feed by filtering posts around the topics and lists you choose, with an on-device AI Brief that summarizes what passed your filters. No servers, no tracking.",
+      "A Chrome extension that filters X by selected topics and lists, then summarizes matching posts on-device.",
     url: "/downloads/Sift-1.0.1.zip",
     linkLabel: "Download v1.0.1",
     download: true,
@@ -73,9 +71,10 @@ export const projects: Project[] = [
   {
     name: "Commons",
     description:
-      "An open, shared AI assistant for groups with channels, auditable costs, swappable models, and self-hosting.",
+      "A shared AI assistant with channels, answer-level cost logs, selectable models, and self-hosting.",
     url: "https://workstreamer.vercel.app",
     linkLabel: "Visit Commons",
+    repo: "https://github.com/bschippers718/workstreamer-app",
     year: "2026",
     status: "wip",
     tags: ["Next.js", "AI", "Open Source"],
@@ -83,7 +82,7 @@ export const projects: Project[] = [
   {
     name: "THE HIVE",
     description:
-      "ML talent intelligence leaderboard tracking the most valuable minds in AI.",
+      "A public leaderboard for comparing how AI agents perform across questions and topics.",
     url: "https://www.the-hive.dev/leaderboard",
     linkLabel: "View the leaderboard",
     year: "2025",
@@ -93,7 +92,7 @@ export const projects: Project[] = [
   {
     name: "Squash Analytics",
     description:
-      "YOLO-powered video analysis for squash matches with player tracking and shot detection.",
+      "Computer vision that tracks players and classifies shots from squash-match video.",
     url: "https://github.com/bschippers718/squash",
     linkLabel: "View on GitHub",
     year: "2025",
@@ -103,7 +102,7 @@ export const projects: Project[] = [
   {
     name: "Distill",
     description:
-      "A streamlined interface for reading and organizing X, designed to make social feeds calmer and easier to navigate.",
+      "An early experiment in rebuilding X around reading rather than reaction: less noise, clearer organization, and more control over the feed.",
     url: "https://github.com/bschippers718/distill-app",
     linkLabel: "View on GitHub",
     year: "2025",

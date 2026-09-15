@@ -20,9 +20,4 @@ export const contactChannels: ContactChannel[] = [
     href: "https://github.com/bschippers718",
     handle: "github.com/bschippers718",
   },
-  {
-    label: "Web",
-    href: "https://benschippers.com",
-    handle: "benschippers.com",
-  },
 ];
