@@ -45,8 +45,9 @@ export default function ProjectsPage() {
             {project.image && (
               <a
                 href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={project.download ? undefined : "_blank"}
+                rel={project.download ? undefined : "noopener noreferrer"}
+                download={project.download ? project.url?.split("/").pop() : undefined}
                 className="block mt-4 overflow-hidden rounded-sm border border-[var(--line)]"
               >
                 <Image

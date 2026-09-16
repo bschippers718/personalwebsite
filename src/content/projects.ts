@@ -60,13 +60,19 @@ export const projects: Project[] = [
   {
     name: "Sift",
     description:
-      "A Chrome extension that filters X by selected topics and lists, then summarizes matching posts on-device.",
+      "Sift turns an X List into a feed you control. Choose starter packs or your own topics, block words, promoted posts, reposts, quotes, or specific accounts, then review what Sift filtered. Everything runs locally in Chrome; the optional Brief uses Chrome's on-device model to summarize what made it through, with no server or tracking.",
     url: "/downloads/Sift-1.0.1.zip",
     linkLabel: "Download v1.0.1",
     download: true,
+    image: {
+      src: "/projects/sift-workflow.png",
+      alt: "Sift welcome screen showing three steps: choose topics, add an X List, and open your feed.",
+      width: 1400,
+      height: 1328,
+    },
     year: "2026",
     status: "active",
-    tags: ["Chrome Extension", "X", "JavaScript"],
+    tags: ["Chrome Extension", "X", "On-device AI", "JavaScript"],
   },
   {
     name: "Commons",
