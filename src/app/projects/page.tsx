@@ -18,7 +18,11 @@ export default function ProjectsPage() {
 
       <div>
         {projects.map((project) => (
-          <article key={project.name} className="py-6 border-b border-[var(--line)]">
+          <article
+            key={project.name}
+            id={project.name === "Sift" ? "sift" : undefined}
+            className="scroll-mt-24 py-6 border-b border-[var(--line)]"
+          >
             <div className="flex items-baseline justify-between gap-4">
               <h2 className="text-[1.05rem] font-medium tracking-tight text-[var(--ink)]">
                 {project.url ? (

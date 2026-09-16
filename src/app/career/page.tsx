@@ -32,9 +32,25 @@ export default function CareerPage() {
             <p className="mt-1 text-[0.92rem] text-[var(--ink)]">
               {entry.title}
             </p>
-            {entry.detail && (
+            {(entry.detail || entry.detailParts) && (
               <p className="dim mt-3 text-[0.9rem] leading-relaxed">
-                {entry.detail}
+                {entry.detailParts
+                  ? entry.detailParts.map((part) =>
+                      part.href ? (
+                        <a
+                          key={part.text}
+                          href={part.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="qlink"
+                        >
+                          {part.text}
+                        </a>
+                      ) : (
+                        <span key={part.text}>{part.text}</span>
+                      )
+                    )
+                  : entry.detail}
               </p>
             )}
             {entry.highlights && entry.highlights.length > 0 && (

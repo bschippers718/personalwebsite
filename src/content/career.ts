@@ -15,6 +15,7 @@ export interface CareerEntry {
   title: string;
   org: string;
   detail?: string;
+  detailParts?: CareerHighlight[];
   highlights?: CareerHighlight[];
   status: CareerStatus;
   statusLabel: string;
@@ -42,8 +43,18 @@ export const career: CareerEntry[] = [
     period: "2009 → 2023",
     title: "Co-Founder & Co-CEO",
     org: "HappyFunCorp",
-    detail:
-      "I co-founded HappyFunCorp in 2009. We bootstrapped it to $12M in 2022 revenue; Tiny acquired it for $30M in 2023.",
+    detailParts: [
+      {
+        text: "I co-founded HappyFunCorp in 2009 with my partner, ",
+      },
+      {
+        text: "Will Schenk",
+        href: "https://thefocus.ai",
+      },
+      {
+        text: ". We built an incredibly well-recognized business. Tiny acquired it for $30M in 2023.",
+      },
+    ],
     highlights: [
       {
         text: "Acquired by Tiny for $30M in cash and stock in July 2023.",

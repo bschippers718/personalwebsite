@@ -44,6 +44,35 @@ export default function HomePage() {
         />
       </figure>
 
+      <section className="fade mt-16">
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="text-[1.2rem] font-medium tracking-tight text-[var(--ink)]">
+            Sift
+          </h2>
+          <Link href="/projects#sift" className="qlink shrink-0 text-[0.82rem]">
+            Project details
+          </Link>
+        </div>
+        <p className="dim mt-2 max-w-[33rem] text-[0.95rem] leading-relaxed">
+          A Chrome extension that turns an X List into a feed you control.
+          Choose the topics and accounts you want; Sift removes the rest
+          locally in your browser.
+        </p>
+        <Link
+          href="/projects#sift"
+          className="mt-5 block overflow-hidden rounded-sm border border-[var(--line)]"
+        >
+          <Image
+            src="/projects/sift-workflow.png"
+            alt="Sift onboarding showing how to choose topics, add an X List, and open a filtered feed"
+            width={1400}
+            height={1328}
+            sizes="(max-width: 640px) 100vw, 38rem"
+            className="aspect-[16/10] w-full object-cover object-top"
+          />
+        </Link>
+      </section>
+
       {/* Index */}
       <section className="fade mt-20">
         <GuideRow
