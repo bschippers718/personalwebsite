@@ -12,7 +12,7 @@ export default function CareerPage() {
     <div className="measure pt-24 fade">
       <ChannelHeader
         title="Career"
-        note="I build products and the operating systems behind them: teams, delivery, partnerships, and revenue."
+        note="I love computers and software. Below are a couple of highlights."
       />
 
       <div>

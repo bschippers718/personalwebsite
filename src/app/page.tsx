@@ -16,8 +16,8 @@ export default function HomePage() {
         </h1>
         <p className="mt-8 text-[1.15rem] leading-relaxed dim max-w-[33rem]">
           I co-founded and run TezLab, software for Tesla and Rivian owners.
-          Before TezLab, I co-founded HappyFunCorp, a bootstrapped product
-          studio acquired by Tiny for $30M in 2023.
+          Before TezLab, I co-founded HappyFunCorp, a product studio acquired by
+          Tiny for $30M in 2023.
         </p>
         <p className="mt-5 text-[1.05rem] leading-relaxed dim max-w-[33rem]">
           I also use NYC Open Data to understand how the city moves. NYC in

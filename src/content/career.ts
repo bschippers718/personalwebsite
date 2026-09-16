@@ -77,18 +77,22 @@ export const career: CareerEntry[] = [
     statusLabel: "Acquired by Tiny",
   },
   {
-    period: "2009 → 2010",
+    period: "2006 → 2009",
     title: "Co-Founder",
     org: "Workstreamer",
     detail:
-      "Workstreamer collected live signals from news, social networks, job listings, SEC filings, and CRM systems, then ranked what mattered for a company. This was before business listening became an established software category.",
+      "I built Workstreamer as an online collaboration and aggregation product before business listening became an established software category. Workthink acquired the company in August 2009 and continued the product.",
     highlights: [
       {
-        text: "Austin Ventures backed the company at seed.",
+        text: "Acquired by Workthink in August 2009.",
+        href: "https://www.linkedin.com/in/benschippers",
+      },
+      {
+        text: "Workthink later launched Workstreamer as a real-time business-listening platform backed by Austin Ventures.",
         href: "https://techcrunch.com/2010/04/23/workstreamer-is-a-realtime-listening-and-tracking-platform-for-businesses/",
       },
       {
-        text: "Raised a $3.5M Series A led by Austin Ventures in July 2010.",
+        text: "The product raised a $3.5M Series A led by Austin Ventures in July 2010.",
         href: "https://www.prnewswire.com/news-releases/workstreamer-raises-35-million-series-a-round-99306464.html",
       },
     ],
